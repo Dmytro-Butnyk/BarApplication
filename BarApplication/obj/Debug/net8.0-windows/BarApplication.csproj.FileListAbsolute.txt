@@ -141,3 +141,4 @@ O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Debug\net8.0-window
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Debug\net8.0-windows\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Debug\net8.0-windows\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Debug\net8.0-windows\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\BarApplication.sourcelink.json

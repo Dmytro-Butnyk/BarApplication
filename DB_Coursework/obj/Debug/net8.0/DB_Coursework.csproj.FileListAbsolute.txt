@@ -26,3 +26,4 @@ O:\ForEdu\repos\krnu\Sem 4\BarApplication\DB_Coursework\obj\Debug\net8.0\refint\
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.pdb
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.genruntimeconfig.cache
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\DB_Coursework\obj\Debug\net8.0\ref\DB_Coursework.dll
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.sourcelink.json

@@ -28,7 +28,7 @@
             HorizontalContentAlignment="Center"
             Grid.Column="0"
             Grid.Row="0"/>
-
+        <!--ALL PRODUCTS-->
         <ListBox 
              ItemsSource="{Binding Products}"
              SelectedItem="{Binding SelectedProduct}"
@@ -36,8 +36,8 @@
              Grid.Row="1">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Product name: " />
+                    <StackPanel Orientation="Horizontal" Background="Azure">
+                        <TextBlock Text="Product name: "/>
                         <TextBlock Text="{Binding Name}" Margin="10"/>
                         <TextBlock Text="Price: " />
                         <TextBlock Text="{Binding Price}" Margin="10"/>
@@ -47,6 +47,51 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <!--DRINKS-->
+        <ListBox 
+            ItemsSource="{Binding AlcoholDrinks}"
+            SelectedItem="{Binding SelectedProduct}"
+            Grid.Column="1"
+            Grid.Row="1"
+            Visibility="{Binding IsVisibleAlcoholDrinks}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Background="Azure">
+                        <TextBlock Text="Product name: "/>
+                        <TextBlock Text="{Binding Name}" Margin="10"/>
+                        <TextBlock Text="Price: " />
+                        <TextBlock Text="{Binding Price}" Margin="10"/>
+                        <TextBlock Text="Quantity: " />
+                        <TextBlock Text="{Binding Quantity}" Margin="10"/>
+                        <TextBlock Text="ABV: " />
+                        <TextBlock Text="{Binding ABV}" Margin="10"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <!--SNACKS-->
+        <ListBox 
+            ItemsSource="{Binding Snacks}"
+            SelectedItem="{Binding SelectedProduct}"
+            Grid.Column="1"
+            Grid.Row="1"
+            Visibility="{Binding IsVisibleSnacks}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Background="Azure">
+                        <TextBlock Text="Product name: "/>
+                        <TextBlock Text="{Binding Name}" Margin="10"/>
+                        <TextBlock Text="Price: " />
+                        <TextBlock Text="{Binding Price}" Margin="10"/>
+                        <TextBlock Text="Quantity: " />
+                        <TextBlock Text="{Binding Quantity}" Margin="10"/>
+                        <TextBlock Text="Type: " />
+                        <TextBlock Text="{Binding Type}" Margin="10"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
 
 
         <Grid
@@ -63,7 +108,8 @@
             VerticalAlignment="Center"
             Margin="10,10"
             Background="LightGreen"
-            Height="30"/>
+            Height="30"
+            Visibility="{Binding IsVisibleAdditionPoles}"/>
         <Button 
             Command="{Binding DeleteProductButton}"
             Content="Delete"
@@ -77,7 +123,7 @@
         <Grid
             Grid.Column="1"
             Grid.Row="2"
-            Visibility="{Binding IsVisible}">
+            Visibility="{Binding IsVisibleAdditionPoles}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
@@ -128,20 +174,40 @@
             Grid.Row="1">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="8*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
 
             <Button
+                Content="SHOW ALL"
+                Command="{Binding ShowProductsButton}"
+                Grid.Row="1"
+                Margin="5"/>
+            <Button
+                Content="SHOW DRINKS"
+                Command="{Binding ShowAlcoholDrinksButton}"
+                Grid.Row="2"
+                Margin="5"/>
+            <Button
+                Content="SHOW SNACKS"
+                Command="{Binding ShowSnacksButton}"
+                Grid.Row="3"
+                Margin="5"/>
+
+            <Button
                 Content="ADD DRINK"
                 Command="{Binding AddDrinkButton}"
-                Grid.Row="1"
+                Grid.Row="5"
                 Margin="5"/>
             <Button
                 Content="ADD SNACK"
                 Command="{Binding AddSnackButton}"
-                Grid.Row="2"
+                Grid.Row="6"
                 Margin="5"/>    
 
         </Grid>
