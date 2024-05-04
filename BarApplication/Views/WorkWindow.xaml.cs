@@ -13,18 +13,18 @@ namespace BarApplication.Views
         public WorkWindow(User user)
         {
             InitializeComponent();
+            NavigationDataService nbvm = new NavigationDataService(this, user);
             if (user.Position == "Manager")
             {
-                DataContext = new ManagerViewModel();
-                var frame = new ManagerView();
+                var frame = new ManagerView(nbvm);
                 Content = frame;
             }
             else
             {
-                DataContext = new SellerViewModel();
                 var frame = new SellerView();
                 Content = frame;
             }
+
         }
     }
 }

@@ -61,6 +61,9 @@ namespace DB_Coursework.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsOpened")
+                        .HasColumnType("bit");
+
                     b.Property<int>("TableId")
                         .HasColumnType("int");
 
@@ -127,11 +130,19 @@ namespace DB_Coursework.Migrations
                     b.Property<double>("Quantity")
                         .HasColumnType("float");
 
+                    b.Property<DateTime>("SupplyTime")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Supplies");
+                    b.ToTable("Supplies", t =>
+                        {
+                            t.HasTrigger("UpdateProductQuantityOnSupply");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
             modelBuilder.Entity("DB_Coursework.Models.Users.User", b =>

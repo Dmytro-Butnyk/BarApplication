@@ -2,19 +2,20 @@
 using DB_Coursework.Models.BaseClasses;
 using DB_Coursework.Models.Products;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace BarApplication.ViewModels.ManVM
 {
     public class ManagerViewModel : ObservableObject
     {
-        private readonly BarContext _context = new BarContext();
-        private List<Product> _products;
-        private List<AlcoholDrink> _alcoholDrinks;
-        private List<Snack> _snacks;
-        private Visibility _isVisibleAdditionPoles = Visibility.Collapsed;
+        private readonly BarContext _context = new();
 
+        private Visibility _isVisibleAdditionPoles = Visibility.Collapsed;
         private Visibility _isVisibleProducts = Visibility.Collapsed;
         private Visibility _isVisibleAlcoholDrinks = Visibility.Collapsed;
         private Visibility _isVisibleSnacks = Visibility.Collapsed;
@@ -24,6 +25,10 @@ namespace BarApplication.ViewModels.ManVM
         private string _productType;
         private Product _selectedProduct;
 
+        private List<Product> _products;
+        private List<AlcoholDrink> _alcoholDrinks;
+        private List<Snack> _snacks;
+
         public ICommand DeleteProductButton { get; }
         public ICommand AddDrinkButton { get; }
         public ICommand AddSnackButton { get; }
@@ -31,19 +36,22 @@ namespace BarApplication.ViewModels.ManVM
         public ICommand ShowProductsButton { get; }
         public ICommand ShowAlcoholDrinksButton { get; }
         public ICommand ShowSnacksButton { get; }
+        public ICommand GoToSuppliesCommand { get; }
+        public ICommand GoToUsersCommand { get; }
 
-        public ManagerViewModel()
+        public ManagerViewModel(NavigationDataService nbvm)
         {
-            DeleteProductButton = new RelayCommand(DeleteProductCommand);
-            AddProductButton = new RelayCommand(AddProductCommand);
+            GoToSuppliesCommand = nbvm.GoToSuppliesPageCommand;
+            GoToUsersCommand = nbvm.GoToUsersPageCommand;
 
-            AddDrinkButton = new RelayCommand(() => AddProduct("Drink", "ABV:"));
-            AddSnackButton = new RelayCommand(() => AddProduct("Snack", "Snack type:"));
+            DeleteProductButton = new RelayCommand(async () => await DeleteProductCommandAsync());
+            AddProductButton = new RelayCommand(AddProduct);
+            AddDrinkButton = new RelayCommand(() => SetProductType("Drink", "ABV:"));
+            AddSnackButton = new RelayCommand(() => SetProductType("Snack", "Snack type:"));
 
-
-            ShowProductsButton = new RelayCommand(() => ShowCategoryCommand(LoadProducts, "Product"));
-            ShowAlcoholDrinksButton = new RelayCommand(() => ShowCategoryCommand(LoadAlcoholDrinks, "AlcoholDrinks"));
-            ShowSnacksButton = new RelayCommand(() => ShowCategoryCommand(LoadSnacks, "Snacks"));
+            ShowProductsButton = new RelayCommand(async () => await ShowCategoryAsync(LoadProducts, "Products"));
+            ShowAlcoholDrinksButton = new RelayCommand(async () => await ShowCategoryAsync(LoadAlcoholDrinks, "AlcoholDrinks"));
+            ShowSnacksButton = new RelayCommand(async () => await ShowCategoryAsync(LoadSnacks, "Snacks"));
         }
 
         public List<Product> Products
@@ -77,21 +85,13 @@ namespace BarApplication.ViewModels.ManVM
         public Product SelectedProduct
         {
             get => _selectedProduct;
-            set
-            {
-                _selectedProduct = value;
-                OnPropertyChanged(nameof(SelectedProduct));
-            }
+            set { _selectedProduct = value; OnPropertyChanged(nameof(SelectedProduct)); }
         }
 
         public string ProductName
         {
             get => _pRegistration[0];
-            set
-            {
-                _pRegistration[0] = value;
-                OnPropertyChanged(nameof(ProductName));
-            }
+            set { _pRegistration[0] = value; OnPropertyChanged(nameof(ProductName)); }
         }
 
         public string ProductPrice
@@ -99,7 +99,7 @@ namespace BarApplication.ViewModels.ManVM
             get => _pRegistration[1];
             set
             {
-                if (decimal.TryParse(value, out decimal price))
+                if (decimal.TryParse(value, out decimal price) && price > 0)
                     _pRegistration[1] = value;
                 else
                     MessageBox.Show("Invalid price format");
@@ -110,85 +110,50 @@ namespace BarApplication.ViewModels.ManVM
         public string ProductSpecialization
         {
             get => _pRegistration[2];
-            set
-            {
-                _pRegistration[2] = value;
-                OnPropertyChanged(nameof(ProductSpecialization));
-            }
+            set { _pRegistration[2] = value; OnPropertyChanged(nameof(ProductSpecialization)); }
         }
 
         public string ProductType
         {
             get => _productType;
-            set
-            {
-                _productType = value;
-                OnPropertyChanged(nameof(ProductType));
-            }
+            set { _productType = value; OnPropertyChanged(nameof(ProductType)); }
         }
 
         public Visibility IsVisibleAdditionPoles
         {
             get => _isVisibleAdditionPoles;
-            set
-            {
-                _isVisibleAdditionPoles = value;
-                OnPropertyChanged(nameof(IsVisibleAdditionPoles));
-            }
+            set { _isVisibleAdditionPoles = value; OnPropertyChanged(nameof(IsVisibleAdditionPoles)); }
         }
+
         public Visibility IsVisibleProducts
         {
             get => _isVisibleProducts;
-            set
-            {
-                _isVisibleProducts = value;
-                OnPropertyChanged(nameof(IsVisibleProducts));
-            }
+            set { _isVisibleProducts = value; OnPropertyChanged(nameof(IsVisibleProducts)); }
         }
 
         public Visibility IsVisibleAlcoholDrinks
         {
             get => _isVisibleAlcoholDrinks;
-            set
-            {
-                _isVisibleAlcoholDrinks = value;
-                OnPropertyChanged(nameof(IsVisibleAlcoholDrinks));
-            }
+            set { _isVisibleAlcoholDrinks = value; OnPropertyChanged(nameof(IsVisibleAlcoholDrinks)); }
         }
 
         public Visibility IsVisibleSnacks
         {
             get => _isVisibleSnacks;
-            set
-            {
-                _isVisibleSnacks = value;
-                OnPropertyChanged(nameof(IsVisibleSnacks));
-            }
+            set { _isVisibleSnacks = value; OnPropertyChanged(nameof(IsVisibleSnacks)); }
         }
+
         public string LabelProductType
         {
             get => _labelProductType;
-            set
-            {
-                _labelProductType = value;
-                OnPropertyChanged(nameof(LabelProductType));
-            }
+            set { _labelProductType = value; OnPropertyChanged(nameof(LabelProductType)); }
         }
 
-        private async Task LoadProducts()
-        {
-            Products = await _context.Products.ToListAsync();
-        }
-        private async Task LoadAlcoholDrinks()
-        {
-            AlcoholDrinks = await _context.AlcoholDrinks.ToListAsync();
-        }
-        private async Task LoadSnacks()
-        {
-            Snacks = await _context.Snacks.ToListAsync();
-        }
+        private async Task LoadProducts() => Products = await _context.Products.ToListAsync();
+        private async Task LoadAlcoholDrinks() => AlcoholDrinks = await _context.AlcoholDrinks.ToListAsync();
+        private async Task LoadSnacks() => Snacks = await _context.Snacks.ToListAsync();
 
-        private async void DeleteProductCommand()
+        private async Task DeleteProductCommandAsync()
         {
             if (SelectedProduct == null)
             {
@@ -199,24 +164,22 @@ namespace BarApplication.ViewModels.ManVM
             _context.Products.Remove(SelectedProduct);
             MessageBox.Show($"Product {SelectedProduct.Name} deleted");
 
-            await _context.SaveChangesAsync();
-            await LoadProducts();
-            await LoadAlcoholDrinks();
-            await LoadSnacks();
+            try
+            {
+                await _context.SaveChangesAsync();
+                await LoadProducts();
+                await LoadAlcoholDrinks();
+                await LoadSnacks();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while deleting the product: {ex.Message}");
+            }
         }
 
-        private void AddProduct(string productType, string labelProductType)
+        private async void AddProduct()
         {
-            IsVisibleAdditionPoles = Visibility.Visible;
-            LabelProductType = labelProductType;
-            ProductType = productType;
-        }
-
-        private async void AddProductCommand()
-        {
-            if (string.IsNullOrWhiteSpace(ProductName)
-                || string.IsNullOrWhiteSpace(ProductPrice)
-                || string.IsNullOrWhiteSpace(ProductSpecialization))
+            if (string.IsNullOrWhiteSpace(ProductName) || string.IsNullOrWhiteSpace(ProductPrice) || string.IsNullOrWhiteSpace(ProductSpecialization))
             {
                 MessageBox.Show("Please fill out all fields!");
                 return;
@@ -237,15 +200,34 @@ namespace BarApplication.ViewModels.ManVM
                 _context.Snacks.Add(new Snack(ProductName, decimal.Parse(ProductPrice), ProductSpecialization));
             }
 
-            await _context.SaveChangesAsync();
-            await LoadProducts();
-            IsVisibleAdditionPoles = Visibility.Collapsed;
+            ProductName = "";
+            ProductPrice = "0";
+            ProductSpecialization = "";
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                await LoadProducts();
+                await LoadAlcoholDrinks();
+                await LoadSnacks();
+                IsVisibleAdditionPoles = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while adding the product: {ex.Message}");
+            }
         }
-        private async void ShowCategoryCommand(Func<Task> loadCategory, string category)
+
+        private void SetProductType(string productType, string labelProductType)
         {
-            IsVisibleProducts = Visibility.Collapsed;
-            IsVisibleAlcoholDrinks = Visibility.Collapsed;
-            IsVisibleSnacks = Visibility.Collapsed;
+            IsVisibleAdditionPoles = Visibility.Visible;
+            LabelProductType = labelProductType;
+            ProductType = productType;
+        }
+
+        private async Task ShowCategoryAsync(Func<Task> loadCategory, string category)
+        {
+            HideAllCategories();
 
             switch (category)
             {
@@ -265,6 +247,14 @@ namespace BarApplication.ViewModels.ManVM
             OnPropertyChanged(nameof(IsVisibleSnacks));
 
             await loadCategory();
+
+        }
+
+        private void HideAllCategories()
+        {
+            IsVisibleProducts = Visibility.Collapsed;
+            IsVisibleAlcoholDrinks = Visibility.Collapsed;
+            IsVisibleSnacks = Visibility.Collapsed;
         }
     }
 }

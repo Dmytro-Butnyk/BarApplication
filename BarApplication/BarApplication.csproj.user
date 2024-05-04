@@ -7,10 +7,16 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Views\ManagerView.xaml.cs">
+    <Compile Update="Views\ManV\ManagerSuppliesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\SellerView.xaml.cs">
+    <Compile Update="Views\ManV\ManagerUsersView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ManV\ManagerView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SellV\SellerView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\WorkWindow.xaml.cs">
@@ -24,10 +30,16 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\ManagerView.xaml">
+    <Page Update="Views\ManV\ManagerSuppliesView.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\SellerView.xaml">
+    <Page Update="Views\ManV\ManagerUsersView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ManV\ManagerView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SellV\SellerView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\WorkWindow.xaml">

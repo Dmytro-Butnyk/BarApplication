@@ -12,5 +12,14 @@ namespace DB_Coursework.Models.Orders
         public int Id { get; set; }
         public DateTime Date { get; set; }
         public Table Table { get; set; }
+        public bool IsOpened { get; set; }
+
+        public Order() { }
+        public Order(DateTime date, Table table, bool isOpened) 
+        {
+            Date = date;
+            Table = table;
+            IsOpened = isOpened;
+        }
     }
 }

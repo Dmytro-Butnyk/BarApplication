@@ -22,6 +22,7 @@ namespace DB_Coursework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().UseTpcMappingStrategy();
+            modelBuilder.Entity<Supply>().ToTable(tb => tb.HasTrigger("UpdateProductQuantityOnSupply"));
         }
         // Father classes
         public virtual DbSet<Product> Products { get; set; }

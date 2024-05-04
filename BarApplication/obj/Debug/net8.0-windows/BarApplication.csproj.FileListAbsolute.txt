@@ -69,11 +69,7 @@ O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-window
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\BarApplication.genruntimeconfig.cache
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\ref\BarApplication.dll
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\AuthorizationPageStyles.baml
-O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\ManagerView.g.cs
-O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\SellerView.g.cs
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\WorkWindow.g.cs
-O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\ManagerView.baml
-O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\SellerView.baml
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\WorkWindow.baml
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Debug\net8.0-windows\Humanizer.dll
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Debug\net8.0-windows\Microsoft.CodeAnalysis.dll
@@ -142,3 +138,11 @@ O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Debug\net8.0-window
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Debug\net8.0-windows\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Debug\net8.0-windows\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\BarApplication.sourcelink.json
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\ManV\ManagerSuppliesView.g.cs
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\ManV\ManagerView.g.cs
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\ManV\ManagerSuppliesView.baml
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\ManV\ManagerView.baml
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\SellV\SellerView.g.cs
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\SellV\SellerView.baml
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\ManV\ManagerUsersView.g.cs
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\ManV\ManagerUsersView.baml

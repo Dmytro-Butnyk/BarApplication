@@ -12,5 +12,13 @@ namespace DB_Coursework.Models.Products
         public int Id { get; set; }
         public Product Product { get; set; }
         public double Quantity { get; set; }
+        public DateTime SupplyTime { get; set; }
+        public Supply () { }    
+        public Supply(Product product, double quantity, DateTime dateTime)
+        {
+            Product = product;
+            Quantity = quantity;
+            SupplyTime = dateTime;
+        }
     }
 }

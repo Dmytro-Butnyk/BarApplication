@@ -12,5 +12,12 @@ namespace DB_Coursework.Models.Users
         public string Login { get; set; }
         public string Password { get; set; }
         public string Position { get; set; }
+        public User() { }
+        public User(string login, string password, string position)
+        {
+            Login = login;
+            Password = password;
+            Position = position;
+        }
     }
 }

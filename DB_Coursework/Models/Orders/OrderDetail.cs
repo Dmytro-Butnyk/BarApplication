@@ -13,5 +13,12 @@ namespace DB_Coursework.Models.Orders
         public Product Product { get; set; }
         public double Quantity { get; set; }
         public Order Order { get; set; }
+        public OrderDetail() { }
+        public OrderDetail(Product product, double quantity, Order order)
+        {
+            Product = product;
+            Quantity = quantity;    
+            Order = order;
+        }
     }
 }
