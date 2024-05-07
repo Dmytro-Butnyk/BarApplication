@@ -1,116 +1,117 @@
 ﻿using DB_Coursework;
 using DB_Coursework.Models.Orders;
-using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace BarApplication.ViewModels.SellVM
 {
     public class SellerViewModel : ObservableObject
     {
         private readonly BarContext _context = new();
-        private List<Order> _orders;
-        private Order _selectedOrder;
-        private int _tableNumber;
-        private DateTime _orderDate;
-        private bool _isOpenedOrder;
 
-        public ICommand AddOrderCommand { get; }
-        public ICommand CloseOrderCommand { get; }
-        public ICommand ShowOpenedCommand { get; }
-        public ICommand ShowClosedCommand { get; }
+        private ObservableCollection<Order> _orders;
+        private Order _selectedOrder;
+        private ObservableCollection<Table> _tables;
+        private Table _selectedTable;
+        private DateTime _orderDate;
+        private Brush _isOpenedButtonSelected;
+        private Brush _isClosedButtonSelected;
+
         public SellerViewModel()
         {
             AddOrderCommand = new RelayCommand(async () => await AddOrderAsync());
             CloseOrderCommand = new RelayCommand(async () => await CloseOrder());
             ShowClosedCommand = new RelayCommand(async () => await LoadClosedOrders());
             ShowOpenedCommand = new RelayCommand(async () => await LoadOpenedOrders());
+
             Task.Run(UpdateOrderDateAsync);
+            LoadTables(); // Load tables initially
         }
 
-        public List<Order> Orders
+        public ObservableCollection<Order> Orders
         {
             get => _orders;
-            set
-            {
-                _orders = value;
-                OnPropertyChanged(nameof(Orders));
-            }
+            set { _orders = value; OnPropertyChanged(nameof(Orders)); }
         }
+
         public Order SelectedOrder
         {
             get => _selectedOrder;
-            set
-            {
-                _selectedOrder = value;
-                OnPropertyChanged(nameof(SelectedOrder));
-            }
+            set { _selectedOrder = value; OnPropertyChanged(nameof(SelectedOrder)); }
         }
-        public int TableNumber
+
+        public ObservableCollection<Table> Tables
         {
-            get => _tableNumber;
+            get => _tables;
+            set { _tables = value; OnPropertyChanged(nameof(Tables)); }
+        }
+        public Table SelectedTable
+        {
+            get => _selectedTable;
             set
             {
-                if (value >= 0)
-                {
-                    _tableNumber = value;
-                    OnPropertyChanged(nameof(TableNumber));
-                }
-                else
-                {
-                    MessageBox.Show("Wrong table number!");
-                }
+                _selectedTable = value;
+                OnPropertyChanged(nameof(SelectedTable));
             }
         }
         public DateTime OrderDate
         {
             get => _orderDate;
-            set
-            {
-                _orderDate = value;
-                OnPropertyChanged(nameof(OrderDate));
-            }
+            set { _orderDate = value; OnPropertyChanged(nameof(OrderDate)); }
         }
-        public bool IsOpenedOrder
+
+        public Brush IsOpenedButtonSelected
         {
-            get => _isOpenedOrder;
-            set
-            {
-                _isOpenedOrder = value;
-                OnPropertyChanged(nameof(IsOpenedOrder));
-            }
+            get => _isOpenedButtonSelected;
+            set { _isOpenedButtonSelected = value; OnPropertyChanged(nameof(IsOpenedButtonSelected)); }
         }
+
+        public Brush IsClosedButtonSelected
+        {
+            get => _isClosedButtonSelected;
+            set { _isClosedButtonSelected = value; OnPropertyChanged(nameof(IsClosedButtonSelected)); }
+        }
+
+        public ICommand AddOrderCommand { get; }
+        public ICommand CloseOrderCommand { get; }
+        public ICommand ShowOpenedCommand { get; }
+        public ICommand ShowClosedCommand { get; }
+
         private async Task AddOrderAsync()
         {
-            if (TableNumber == 0)
+            if (SelectedTable == null || SelectedTable.Number == 0)
             {
-                MessageBox.Show("Please, fill the fields!");
+                MessageBox.Show("Please, select a table!");
                 return;
             }
 
-            if (_context.Tables.Any(x => x.Number == TableNumber))
+            var tableExists = _context.Tables.Any(x => x.Number == SelectedTable.Number);
+            if (!tableExists)
             {
-                if (_context.Orders.Any(x => x.Table.Number == TableNumber
-                && x.IsOpened == false))
-                {
-                    MessageBox.Show($"Order with table {TableNumber} is already opened!");
-                    return;
-                }
-                _context.Orders.Add(new Order(OrderDate,
-                    _context.Tables.FirstOrDefault(x => x.Number == TableNumber),
-                    false));
-                _context.SaveChanges();
-                await LoadOpenedOrders();
-                TableNumber = 0;
+                MessageBox.Show("Selected table does not exist!");
+                return;
             }
-            else
-                MessageBox.Show("Table is not exists");
+
+            var orderExists = _context.Orders.Any(x => x.Table.Number == SelectedTable.Number && !x.IsOpened);
+            if (orderExists)
+            {
+                MessageBox.Show($"Order for table {SelectedTable.Number} is already opened!");
+                return;
+            }
+
+            var newOrder = new Order(OrderDate, SelectedTable, false);
+            _context.Orders.Add(newOrder);
+            _context.SaveChanges();
+            await LoadOpenedOrders();
+            SelectedTable = null; // Reset selected table
         }
+
         private async Task UpdateOrderDateAsync()
         {
             while (true)
@@ -120,11 +121,17 @@ namespace BarApplication.ViewModels.SellVM
             }
         }
 
+        private async Task LoadTables()
+        {
+            Tables = new ObservableCollection<Table>(await _context.Tables.ToListAsync());
+        }
+
         private async Task CloseOrder()
         {
             if (SelectedOrder == null)
                 return;
-            if (SelectedOrder.IsOpened == false)
+
+            if (!SelectedOrder.IsOpened)
             {
                 SelectedOrder.IsOpened = true;
                 _context.SaveChanges();
@@ -132,23 +139,27 @@ namespace BarApplication.ViewModels.SellVM
                 await LoadOpenedOrders();
             }
             else
-                MessageBox.Show("Order already closed!");
+            {
+                MessageBox.Show("Order is already closed!");
+            }
         }
+
         private async Task LoadOpenedOrders()
         {
-            if (_context.Orders == null)
-                return;
-            Orders = _context.Orders
-                .Where(x => x.IsOpened == false)
-                .ToList();
+            Orders = new ObservableCollection<Order>(_context.Orders.Where(x => !x.IsOpened).ToList());
+            UpdateButtonColors(Colors.Aqua, Colors.White);
         }
+
         private async Task LoadClosedOrders()
         {
-            if (_context.Orders == null)
-                return;
-            Orders = _context.Orders
-                .Where(x => x.IsOpened == true)
-                .ToList();
+            Orders = new ObservableCollection<Order>(_context.Orders.Where(x => x.IsOpened).ToList());
+            UpdateButtonColors(Colors.White, Colors.Aqua);
+        }
+
+        private void UpdateButtonColors(Color openedColor, Color closedColor)
+        {
+            IsOpenedButtonSelected = new SolidColorBrush(openedColor);
+            IsClosedButtonSelected = new SolidColorBrush(closedColor);
         }
     }
 }

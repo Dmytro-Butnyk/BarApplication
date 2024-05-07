@@ -53,11 +53,12 @@
             Grid.Row="2"
             VerticalAlignment="Bottom"
             Style="{StaticResource CircleBorder}">
-            <TextBox
-                Text="{Binding Password}"
+            <PasswordBox
+                x:Name="passwordBox"
+                PasswordChanged="PasswordBox_PasswordChanged"
                 Margin="4,1,4,1"
                 Background="Transparent"
-                Style="{StaticResource FontTBStyle}"/>
+                Style="{StaticResource FontPBStyle}"/>
         </Border>
 
         <Border

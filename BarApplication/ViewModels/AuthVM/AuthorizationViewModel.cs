@@ -1,6 +1,8 @@
 ﻿using BarApplication.Views;
 using DB_Coursework;
 using DB_Coursework.Models.Users;
+using System.Net;
+using System.Security;
 using System.Windows;
 using System.Windows.Input;
 
@@ -9,7 +11,9 @@ namespace BarApplication.ViewModels.AuthVM
     public class AuthorizationViewModel : ObservableObject
     {
         private string _login;
-        private string _password;
+        private SecureString _password;
+        
+
 
         public ICommand ButtonLogIn { get; }
 
@@ -31,7 +35,7 @@ namespace BarApplication.ViewModels.AuthVM
             }
         }
 
-        public string Password
+        public SecureString Password
         {
             get => _password;
             set
@@ -39,7 +43,7 @@ namespace BarApplication.ViewModels.AuthVM
                 if (_password != value)
                 {
                     _password = value;
-                    OnPropertyChanged(nameof(_password));
+                    OnPropertyChanged(nameof(Password));
                 }
             }
         }
@@ -48,7 +52,8 @@ namespace BarApplication.ViewModels.AuthVM
         {
             using (var context = new BarContext())
             {
-                var user = context.Users.FirstOrDefault(x => x.Login == Login && x.Password == Password);
+                var password = new NetworkCredential(string.Empty, Password).Password;
+                var user = context.Users.FirstOrDefault(x => x.Login == Login && x.Password == password);
                 if (user != null)
                 {
                     OpenWorkWindow(user);

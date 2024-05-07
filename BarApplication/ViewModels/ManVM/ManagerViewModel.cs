@@ -1,21 +1,24 @@
-﻿using DB_Coursework;
-using DB_Coursework.Models.BaseClasses;
-using DB_Coursework.Models.Products;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
+using DB_Coursework;
+using DB_Coursework.Models.BaseClasses;
+using DB_Coursework.Models.Orders;
+using DB_Coursework.Models.Products;
+using Microsoft.EntityFrameworkCore;
 
 namespace BarApplication.ViewModels.ManVM
 {
     public class ManagerViewModel : ObservableObject
     {
-        private readonly BarContext _context = new();
+        private readonly BarContext _context = new BarContext();
 
         private Visibility _isVisibleAdditionPoles = Visibility.Collapsed;
+        private Visibility _isVisibleNewTableFields = Visibility.Collapsed;
         private Visibility _isVisibleProducts = Visibility.Collapsed;
         private Visibility _isVisibleAlcoholDrinks = Visibility.Collapsed;
         private Visibility _isVisibleSnacks = Visibility.Collapsed;
@@ -25,36 +28,59 @@ namespace BarApplication.ViewModels.ManVM
         private string _productType;
         private Product _selectedProduct;
 
-        private List<Product> _products;
-        private List<AlcoholDrink> _alcoholDrinks;
-        private List<Snack> _snacks;
+        private ObservableCollection<Product> _products;
+        private ObservableCollection<AlcoholDrink> _alcoholDrinks;
+        private ObservableCollection<Snack> _snacks;
+        private ObservableCollection<Table> _tables;
 
-        public ICommand DeleteProductButton { get; }
-        public ICommand AddDrinkButton { get; }
-        public ICommand AddSnackButton { get; }
-        public ICommand AddProductButton { get; }
-        public ICommand ShowProductsButton { get; }
-        public ICommand ShowAlcoholDrinksButton { get; }
-        public ICommand ShowSnacksButton { get; }
-        public ICommand GoToSuppliesCommand { get; }
-        public ICommand GoToUsersCommand { get; }
+        public ICommand DeleteProductButton { get; set; }
+        public ICommand AddDrinkButton { get; set; }
+        public ICommand AddSnackButton { get; set; }
+        public ICommand AddProductButton { get; set; }
+        public ICommand ShowProductsButton { get; set; }
+        public ICommand ShowAlcoholDrinksButton { get; set; }
+        public ICommand ShowSnacksButton { get; set; }
+        public ICommand GoToSuppliesCommand { get; set; }
+        public ICommand GoToUsersCommand { get; set; }
+        public ICommand AddTableCommand { get; set; }
+        public ICommand ShowTableFields { get; set; }
+        public ICommand DeleteTablesCommand { get; set; }
 
         public ManagerViewModel(NavigationDataService nbvm)
         {
             GoToSuppliesCommand = nbvm.GoToSuppliesPageCommand;
             GoToUsersCommand = nbvm.GoToUsersPageCommand;
 
-            DeleteProductButton = new RelayCommand(async () => await DeleteProductCommandAsync());
+            InitializeCommands();
+            LoadData();
+        }
+
+        private void InitializeCommands()
+        {
+            DeleteProductButton = new RelayCommand(async () => await DeleteProductAsync());
+            DeleteTablesCommand = new RelayCommand(async () => await DeleteTables());
             AddProductButton = new RelayCommand(AddProduct);
+            AddTableCommand = new RelayCommand(async () => await AddNewTable());
+
             AddDrinkButton = new RelayCommand(() => SetProductType("Drink", "ABV:"));
             AddSnackButton = new RelayCommand(() => SetProductType("Snack", "Snack type:"));
+            ShowTableFields = new RelayCommand(() => SetProductType("Table", string.Empty));
 
             ShowProductsButton = new RelayCommand(async () => await ShowCategoryAsync(LoadProducts, "Products"));
             ShowAlcoholDrinksButton = new RelayCommand(async () => await ShowCategoryAsync(LoadAlcoholDrinks, "AlcoholDrinks"));
             ShowSnacksButton = new RelayCommand(async () => await ShowCategoryAsync(LoadSnacks, "Snacks"));
         }
 
-        public List<Product> Products
+        private async Task LoadData()
+        {
+            await LoadTables();
+            await LoadProducts();
+            await LoadAlcoholDrinks();
+            await LoadSnacks();
+        }
+
+        // Properties
+        public ObservableCollection<Product> Products
         {
             get => _products;
             set
@@ -63,7 +89,8 @@ namespace BarApplication.ViewModels.ManVM
                 OnPropertyChanged(nameof(Products));
             }
         }
-        public List<AlcoholDrink> AlcoholDrinks
+
+        public ObservableCollection<AlcoholDrink> AlcoholDrinks
         {
             get => _alcoholDrinks;
             set
@@ -72,7 +99,8 @@ namespace BarApplication.ViewModels.ManVM
                 OnPropertyChanged(nameof(AlcoholDrinks));
             }
         }
-        public List<Snack> Snacks
+
+        public ObservableCollection<Snack> Snacks
         {
             get => _snacks;
             set
@@ -86,6 +114,16 @@ namespace BarApplication.ViewModels.ManVM
         {
             get => _selectedProduct;
             set { _selectedProduct = value; OnPropertyChanged(nameof(SelectedProduct)); }
+        }
+
+        public ObservableCollection<Table> Tables
+        {
+            get => _tables;
+            set
+            {
+                _tables = value;
+                OnPropertyChanged(nameof(Tables));
+            }
         }
 
         public string ProductName
@@ -125,6 +163,16 @@ namespace BarApplication.ViewModels.ManVM
             set { _isVisibleAdditionPoles = value; OnPropertyChanged(nameof(IsVisibleAdditionPoles)); }
         }
 
+        public Visibility IsVisibleNewTableFields
+        {
+            get => _isVisibleNewTableFields;
+            set
+            {
+                _isVisibleNewTableFields = value;
+                OnPropertyChanged(nameof(IsVisibleNewTableFields));
+            }
+        }
+
         public Visibility IsVisibleProducts
         {
             get => _isVisibleProducts;
@@ -149,11 +197,31 @@ namespace BarApplication.ViewModels.ManVM
             set { _labelProductType = value; OnPropertyChanged(nameof(LabelProductType)); }
         }
 
-        private async Task LoadProducts() => Products = await _context.Products.ToListAsync();
-        private async Task LoadAlcoholDrinks() => AlcoholDrinks = await _context.AlcoholDrinks.ToListAsync();
-        private async Task LoadSnacks() => Snacks = await _context.Snacks.ToListAsync();
+        public int NewTableNumber
+        {
+            get => _newTableNumber;
+            set
+            {
+                if (value > 0)
+                    _newTableNumber = value;
+                else
+                    MessageBox.Show("Wrong table number value!");
+                OnPropertyChanged(nameof(NewTableNumber));
+            }
+        }
 
-        private async Task DeleteProductCommandAsync()
+        private int _newTableNumber;
+
+        // Methods
+        private async Task LoadProducts() => Products = new ObservableCollection<Product>(await _context.Products.ToListAsync());
+
+        private async Task LoadAlcoholDrinks() => AlcoholDrinks = new ObservableCollection<AlcoholDrink>(await _context.AlcoholDrinks.ToListAsync());
+
+        private async Task LoadSnacks() => Snacks = new ObservableCollection<Snack>(await _context.Snacks.ToListAsync());
+
+        private async Task LoadTables() => Tables = new ObservableCollection<Table>(await _context.Tables.ToListAsync());
+
+        private async Task DeleteProductAsync()
         {
             if (SelectedProduct == null)
             {
@@ -220,9 +288,18 @@ namespace BarApplication.ViewModels.ManVM
 
         private void SetProductType(string productType, string labelProductType)
         {
-            IsVisibleAdditionPoles = Visibility.Visible;
-            LabelProductType = labelProductType;
-            ProductType = productType;
+            if (productType == "Drink" || productType == "Snack")
+            {
+                IsVisibleAdditionPoles = Visibility.Visible;
+                IsVisibleNewTableFields = Visibility.Collapsed;
+                LabelProductType = labelProductType;
+                ProductType = productType;
+            }
+            else
+            {
+                IsVisibleAdditionPoles = Visibility.Collapsed;
+                IsVisibleNewTableFields = Visibility.Visible;
+            }
         }
 
         private async Task ShowCategoryAsync(Func<Task> loadCategory, string category)
@@ -247,7 +324,6 @@ namespace BarApplication.ViewModels.ManVM
             OnPropertyChanged(nameof(IsVisibleSnacks));
 
             await loadCategory();
-
         }
 
         private void HideAllCategories()
@@ -255,6 +331,29 @@ namespace BarApplication.ViewModels.ManVM
             IsVisibleProducts = Visibility.Collapsed;
             IsVisibleAlcoholDrinks = Visibility.Collapsed;
             IsVisibleSnacks = Visibility.Collapsed;
+        }
+
+        private async Task AddNewTable()
+        {
+            if (Tables.Any(x => x.Number == NewTableNumber))
+            {
+                MessageBox.Show("This table number already exists");
+                return;
+            }
+
+            _context.Tables.Add(new Table { Number = NewTableNumber });
+            _context.SaveChanges();
+            MessageBox.Show($"New table number {NewTableNumber} added!");
+            NewTableNumber = 1;
+            await LoadTables();
+        }
+
+        private async Task DeleteTables()
+        {
+            _context.Tables.RemoveRange(Tables);
+            _context.SaveChanges();
+            MessageBox.Show("Tables deleted");
+            await LoadTables();
         }
     }
 }

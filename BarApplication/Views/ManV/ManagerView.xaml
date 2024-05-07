@@ -112,7 +112,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Background="Azure">
-                        <TextBlock Text="Drink name: "/>
+                        <TextBlock Text="Snack name: "/>
                         <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
                             <TextBlock Text="{Binding Name}" Margin="10"/>
                         </Border>
@@ -162,6 +162,7 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
+        <!--PRODUCTS-->
         <Button 
             Content="Add"
             Command="{Binding AddProductButton}"
@@ -179,6 +180,45 @@
             Margin="10,10"
             Background="Red"
             Height="30"/>
+        <!--TABLES-->
+            <Button 
+                Content="Add"
+                Command="{Binding AddTableCommand}"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Margin="10,10"
+                Background="LightGreen"
+                Height="30"
+                Visibility="{Binding IsVisibleNewTableFields}"/>
+        </Grid>
+
+            <!--NEW TABLE-->
+        <Grid
+            Grid.Column="1"
+            Grid.Row="2"
+            Visibility="{Binding IsVisibleNewTableFields}">
+            
+            <Label
+                Content="Table number:"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"/>
+            <TextBox
+                Text="{Binding NewTableNumber}"
+                Height="25"
+                Width="100"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
+            <Button 
+                Command="{Binding DeleteTablesCommand}"
+                Content="Delete all tables"
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right"
+                Margin="10,10"
+                Background="Red"
+                Height="30"/>
+
         </Grid>
 
         <Grid
@@ -191,6 +231,7 @@
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
+            <!--NEW PRODUCT-->
             <Label
                 Content="Product name:"
                 VerticalAlignment="Top"
@@ -239,7 +280,8 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="5*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
@@ -269,7 +311,12 @@
                 Content="ADD SNACK"
                 Command="{Binding AddSnackButton}"
                 Grid.Row="6"
-                Margin="5"/>    
+                Margin="5"/>
+            <Button
+                Content="ADD TABLE"
+                Command="{Binding ShowTableFields}"
+                Grid.Row="7"
+                Margin="5"/>
 
         </Grid>
     </Grid>
