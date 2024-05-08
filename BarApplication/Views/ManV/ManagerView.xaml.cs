@@ -8,7 +8,7 @@ namespace BarApplication.Views
     /// </summary>
     public partial class ManagerView : Page
     {
-        public ManagerView(NavigationDataService nbvm)
+        public ManagerView(NavigationDataServiceMan nbvm)
         {
             InitializeComponent();
             DataContext = new ManagerViewModel(nbvm);

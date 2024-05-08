@@ -25,7 +25,7 @@ namespace BarApplication.ViewModels.ManVM
         public ICommand GoToProductsCommand { get; }
         public ICommand GoToUsersCommand { get; }
 
-        public ManagerSuppliesViewModel(NavigationDataService nbvm)
+        public ManagerSuppliesViewModel(NavigationDataServiceMan nbvm)
         {
             GoToProductsCommand = nbvm.GoToProductsPageCommand;
             GoToUsersCommand = nbvm.GoToUsersPageCommand;

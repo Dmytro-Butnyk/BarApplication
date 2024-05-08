@@ -1,4 +1,5 @@
-﻿using DB_Coursework;
+﻿using BarApplication.ViewModels.SellVM.Servises;
+using DB_Coursework;
 using DB_Coursework.Models.Orders;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,8 +24,15 @@ namespace BarApplication.ViewModels.SellVM
         private Brush _isOpenedButtonSelected;
         private Brush _isClosedButtonSelected;
 
-        public SellerViewModel()
+        public ICommand AddOrderCommand { get; }
+        public ICommand CloseOrderCommand { get; }
+        public ICommand ShowOpenedCommand { get; }
+        public ICommand ShowClosedCommand { get; }
+        public ICommand GoToOrderDetails { get; }
+
+        public SellerViewModel(NavigationDataServiceSell ndss)
         {
+            GoToOrderDetails = ndss.GoToOrderDetailCommand;
             AddOrderCommand = new RelayCommand(async () => await AddOrderAsync());
             CloseOrderCommand = new RelayCommand(async () => await CloseOrder());
             ShowClosedCommand = new RelayCommand(async () => await LoadClosedOrders());
@@ -78,10 +86,7 @@ namespace BarApplication.ViewModels.SellVM
             set { _isClosedButtonSelected = value; OnPropertyChanged(nameof(IsClosedButtonSelected)); }
         }
 
-        public ICommand AddOrderCommand { get; }
-        public ICommand CloseOrderCommand { get; }
-        public ICommand ShowOpenedCommand { get; }
-        public ICommand ShowClosedCommand { get; }
+
 
         private async Task AddOrderAsync()
         {
@@ -121,7 +126,7 @@ namespace BarApplication.ViewModels.SellVM
             }
         }
 
-        private async Task LoadTables()
+        private async void LoadTables()
         {
             Tables = new ObservableCollection<Table>(await _context.Tables.ToListAsync());
         }

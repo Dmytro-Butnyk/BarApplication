@@ -1,5 +1,6 @@
 ﻿using BarApplication.ViewModels.ManVM;
 using BarApplication.ViewModels.SellVM;
+using BarApplication.ViewModels.SellVM.Servises;
 using DB_Coursework.Models.Users;
 using System.Windows;
 
@@ -13,7 +14,9 @@ namespace BarApplication.Views
         public WorkWindow(User user)
         {
             InitializeComponent();
-            NavigationDataService nbvm = new NavigationDataService(this, user);
+            NavigationDataServiceMan nbvm = new(this, user);
+            NavigationDataServiceSell ndss = new(this);
+
             if (user.Position == "Manager")
             {
                 var frame = new ManagerView(nbvm);
@@ -21,7 +24,7 @@ namespace BarApplication.Views
             }
             else
             {
-                var frame = new SellerView();
+                var frame = new SellerView(ndss);
                 Content = frame;
             }
 

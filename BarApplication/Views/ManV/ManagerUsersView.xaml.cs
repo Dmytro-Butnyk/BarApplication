@@ -22,7 +22,7 @@ namespace BarApplication.Views
     /// </summary>
     public partial class ManagerUsersView : Page
     {
-        public ManagerUsersView(NavigationDataService nbvm)
+        public ManagerUsersView(NavigationDataServiceMan nbvm)
         {
             InitializeComponent();
             DataContext = new ManagerUsersViewModel(nbvm);

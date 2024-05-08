@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\App.xaml
-7451306002
+8381347020
 
-17-1703107104
+202079775431
 239-1271573789
-MainWindow.xaml;Views\AuthorizationPageStyles.xaml;Views\ManV\ManagerSuppliesView.xaml;Views\ManV\ManagerUsersView.xaml;Views\ManV\ManagerView.xaml;Views\SellV\SellerView.xaml;Views\WorkWindow.xaml;
+MainWindow.xaml;Views\AuthorizationPageStyles.xaml;Views\ManV\ManagerSuppliesView.xaml;Views\ManV\ManagerUsersView.xaml;Views\ManV\ManagerView.xaml;Views\SellV\SellerOrderDetailsView.xaml;Views\SellV\SellerView.xaml;Views\WorkWindow.xaml;
 
 False
 

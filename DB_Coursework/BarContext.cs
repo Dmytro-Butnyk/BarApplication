@@ -23,6 +23,8 @@ namespace DB_Coursework
         {
             modelBuilder.Entity<Product>().UseTpcMappingStrategy();
             modelBuilder.Entity<Supply>().ToTable(tb => tb.HasTrigger("UpdateProductQuantityOnSupply"));
+            modelBuilder.Entity<OrderDetail>().ToTable(tb => tb.HasTrigger("tr_UpdateProductQuantity"));
+            modelBuilder.Entity<OrderDetail>().ToTable(tb => tb.HasTrigger("tr_UpdateProductQuantityOnDelete"));
         }
         // Father classes
         public virtual DbSet<Product> Products { get; set; }

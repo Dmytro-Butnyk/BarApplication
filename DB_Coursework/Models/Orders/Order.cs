@@ -15,11 +15,15 @@ namespace DB_Coursework.Models.Orders
         public bool IsOpened { get; set; }
 
         public Order() { }
-        public Order(DateTime date, Table table, bool isOpened) 
+        public Order(DateTime date, Table table, bool isOpened)
         {
             Date = date;
             Table = table;
             IsOpened = isOpened;
+        }
+        public override string ToString()
+        {
+           return  $"Id: {Id} | Date: {Date} | Table: {Table.Number} | IsOpened: {IsOpened}";
         }
     }
 }

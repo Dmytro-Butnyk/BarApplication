@@ -97,7 +97,14 @@ namespace DB_Coursework.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails");
+                    b.ToTable("OrderDetails", t =>
+                        {
+                            t.HasTrigger("tr_UpdateProductQuantity");
+
+                            t.HasTrigger("tr_UpdateProductQuantityOnDelete");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
                 });
 
             modelBuilder.Entity("DB_Coursework.Models.Orders.Table", b =>

@@ -46,7 +46,7 @@ namespace BarApplication.ViewModels.ManVM
         public ICommand ShowTableFields { get; set; }
         public ICommand DeleteTablesCommand { get; set; }
 
-        public ManagerViewModel(NavigationDataService nbvm)
+        public ManagerViewModel(NavigationDataServiceMan nbvm)
         {
             GoToSuppliesCommand = nbvm.GoToSuppliesPageCommand;
             GoToUsersCommand = nbvm.GoToUsersPageCommand;
@@ -340,6 +340,8 @@ namespace BarApplication.ViewModels.ManVM
                 MessageBox.Show("This table number already exists");
                 return;
             }
+            if (NewTableNumber == 0)
+                return;
 
             _context.Tables.Add(new Table { Number = NewTableNumber });
             _context.SaveChanges();

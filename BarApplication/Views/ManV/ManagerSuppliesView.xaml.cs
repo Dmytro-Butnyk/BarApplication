@@ -21,7 +21,7 @@ namespace BarApplication.Views
     /// </summary>
     public partial class ManagerSuppliesView : Page
     {
-        public ManagerSuppliesView(NavigationDataService nbvm)
+        public ManagerSuppliesView(NavigationDataServiceMan nbvm)
         {
             InitializeComponent();
             DataContext = new ManagerSuppliesViewModel(nbvm);

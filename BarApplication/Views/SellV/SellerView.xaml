@@ -48,6 +48,23 @@
             Grid.Column="0"
             Grid.Row="0"/>
 
+        <Grid
+            Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+
+            <Button
+                Command="{Binding GoToOrderDetails}"
+                Content="ORDER DETAILS"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center"
+                FontSize="10"
+                Padding="20,5"/>
+
+        </Grid>
+
         <Grid Background="Azure"
               Grid.Column="1"
               Grid.Row="1"
@@ -61,6 +78,7 @@
                 <ColumnDefinition Width="2*"/>
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
+            
             <Label Content="Table Number:"/>
             <ComboBox 
                 ItemsSource="{Binding Tables}"

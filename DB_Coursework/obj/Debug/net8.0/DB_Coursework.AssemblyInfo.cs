@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DB_Coursework")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+13e7def060b2113f078d19fbd1c24affc16086d3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ce34d3dea995a2006482460a18cb51c9822bdf05")]
 [assembly: System.Reflection.AssemblyProductAttribute("DB_Coursework")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DB_Coursework")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

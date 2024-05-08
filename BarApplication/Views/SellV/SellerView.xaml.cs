@@ -1,4 +1,5 @@
 ﻿using BarApplication.ViewModels.SellVM;
+using BarApplication.ViewModels.SellVM.Servises;
 using System.Windows.Controls;
 
 namespace BarApplication.Views
@@ -8,10 +9,10 @@ namespace BarApplication.Views
     /// </summary>
     public partial class SellerView : Page
     {
-        public SellerView()
+        public SellerView(NavigationDataServiceSell ndss)
         {
             InitializeComponent();
-            DataContext = new SellerViewModel();
+            DataContext = new SellerViewModel(ndss);
         }
     }
 }

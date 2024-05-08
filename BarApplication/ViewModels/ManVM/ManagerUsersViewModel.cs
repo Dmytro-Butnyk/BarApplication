@@ -29,7 +29,7 @@ namespace BarApplication.ViewModels.ManVM
         public ICommand GoToSuppliesCommand { get; }
         public ICommand GoToProductsCommand {  get; }
 
-        public ManagerUsersViewModel(NavigationDataService nbvm)
+        public ManagerUsersViewModel(NavigationDataServiceMan nbvm)
         {
             _activeUser = nbvm.ActiveUser;
 
