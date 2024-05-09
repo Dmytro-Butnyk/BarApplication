@@ -2,10 +2,7 @@
 using DB_Coursework;
 using DB_Coursework.Models.Orders;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -14,8 +11,7 @@ namespace BarApplication.ViewModels.SellVM
 {
     public class SellerViewModel : ObservableObject
     {
-        private readonly BarContext _context = new();
-
+        private readonly BarContext _context;
         private ObservableCollection<Order> _orders;
         private Order _selectedOrder;
         private ObservableCollection<Table> _tables;
@@ -32,14 +28,14 @@ namespace BarApplication.ViewModels.SellVM
 
         public SellerViewModel(NavigationDataServiceSell ndss)
         {
+            _context = new BarContext();
             GoToOrderDetails = ndss.GoToOrderDetailCommand;
             AddOrderCommand = new RelayCommand(async () => await AddOrderAsync());
-            CloseOrderCommand = new RelayCommand(async () => await CloseOrder());
-            ShowClosedCommand = new RelayCommand(async () => await LoadClosedOrders());
-            ShowOpenedCommand = new RelayCommand(async () => await LoadOpenedOrders());
-
-            Task.Run(UpdateOrderDateAsync);
-            LoadTables(); // Load tables initially
+            CloseOrderCommand = new RelayCommand(async () => await CloseOrderAsync());
+            ShowClosedCommand = new RelayCommand(async () => await LoadOrdersAsync(false));
+            ShowOpenedCommand = new RelayCommand(async () => await LoadOrdersAsync(true));
+            LoadTablesAsync(); // Load tables initially
+            UpdateOrderDateAsync();
         }
 
         public ObservableCollection<Order> Orders
@@ -59,6 +55,7 @@ namespace BarApplication.ViewModels.SellVM
             get => _tables;
             set { _tables = value; OnPropertyChanged(nameof(Tables)); }
         }
+
         public Table SelectedTable
         {
             get => _selectedTable;
@@ -68,6 +65,7 @@ namespace BarApplication.ViewModels.SellVM
                 OnPropertyChanged(nameof(SelectedTable));
             }
         }
+
         public DateTime OrderDate
         {
             get => _orderDate;
@@ -86,8 +84,6 @@ namespace BarApplication.ViewModels.SellVM
             set { _isClosedButtonSelected = value; OnPropertyChanged(nameof(IsClosedButtonSelected)); }
         }
 
-
-
         private async Task AddOrderAsync()
         {
             if (SelectedTable == null || SelectedTable.Number == 0)
@@ -96,14 +92,14 @@ namespace BarApplication.ViewModels.SellVM
                 return;
             }
 
-            var tableExists = _context.Tables.Any(x => x.Number == SelectedTable.Number);
+            var tableExists = await _context.Tables.AnyAsync(x => x.Number == SelectedTable.Number);
             if (!tableExists)
             {
                 MessageBox.Show("Selected table does not exist!");
                 return;
             }
 
-            var orderExists = _context.Orders.Any(x => x.Table.Number == SelectedTable.Number && !x.IsOpened);
+            var orderExists = await _context.Orders.AnyAsync(x => x.Table.Number == SelectedTable.Number && !x.IsOpened);
             if (orderExists)
             {
                 MessageBox.Show($"Order for table {SelectedTable.Number} is already opened!");
@@ -112,8 +108,8 @@ namespace BarApplication.ViewModels.SellVM
 
             var newOrder = new Order(OrderDate, SelectedTable, false);
             _context.Orders.Add(newOrder);
-            _context.SaveChanges();
-            await LoadOpenedOrders();
+            await _context.SaveChangesAsync();
+            await LoadOrdersAsync(true);
             SelectedTable = null; // Reset selected table
         }
 
@@ -126,39 +122,32 @@ namespace BarApplication.ViewModels.SellVM
             }
         }
 
-        private async void LoadTables()
+        private async Task LoadTablesAsync()
         {
             Tables = new ObservableCollection<Table>(await _context.Tables.ToListAsync());
         }
 
-        private async Task CloseOrder()
+        private async Task CloseOrderAsync()
         {
             if (SelectedOrder == null)
                 return;
 
-            if (!SelectedOrder.IsOpened)
-            {
-                SelectedOrder.IsOpened = true;
-                _context.SaveChanges();
-                MessageBox.Show("Order closed!");
-                await LoadOpenedOrders();
-            }
-            else
+            if (SelectedOrder.IsOpened)
             {
                 MessageBox.Show("Order is already closed!");
+                return;
             }
+
+            SelectedOrder.IsOpened = true;
+            await _context.SaveChangesAsync();
+            MessageBox.Show("Order closed!");
+            await LoadOrdersAsync(true);
         }
 
-        private async Task LoadOpenedOrders()
+        private async Task LoadOrdersAsync(bool isOpened)
         {
-            Orders = new ObservableCollection<Order>(_context.Orders.Where(x => !x.IsOpened).ToList());
-            UpdateButtonColors(Colors.Aqua, Colors.White);
-        }
-
-        private async Task LoadClosedOrders()
-        {
-            Orders = new ObservableCollection<Order>(_context.Orders.Where(x => x.IsOpened).ToList());
-            UpdateButtonColors(Colors.White, Colors.Aqua);
+            Orders = new ObservableCollection<Order>(await _context.Orders.Where(x => x.IsOpened == !isOpened).ToListAsync());
+            UpdateButtonColors(!isOpened ? Colors.White : Colors.Aqua, !isOpened ? Colors.Aqua : Colors.White);
         }
 
         private void UpdateButtonColors(Color openedColor, Color closedColor)

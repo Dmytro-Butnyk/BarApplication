@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:BarApplication.Views"
         mc:Ignorable="d"
         Title="WorkWindow" 
-        MinWidth="1000"
-        MinHeight="600">
+        MinWidth="1280"
+        MinHeight="720">
     <Grid>
         
     </Grid>

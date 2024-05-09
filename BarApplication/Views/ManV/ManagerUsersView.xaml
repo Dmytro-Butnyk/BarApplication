@@ -5,33 +5,43 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:BarApplication.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      MinWidth="1080"
+      MinHeight="520"
       Title="ManagerUsersView">
 
     <Page.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
         </Style>
-        <Style TargetType="TextBox">
+
+        <Style TargetType="Label">
             <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
+
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10"/>
         </Style>
-        <Style TargetType="ComboBox">
+
+        <Style TargetType="CheckBox">
             <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="5"/>
         </Style>
     </Page.Resources>
 
     <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="5.5*"/>
+            <ColumnDefinition Width="5.5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
@@ -39,34 +49,38 @@
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
 
-        <Label 
-               Content="Manager&#xD;&#xA;Users"
-               FontSize="26"
-               FontWeight="Bold"
-               HorizontalAlignment="Stretch"
-               VerticalAlignment="Stretch"
-               Grid.Column="0"
-               Grid.Row="0"/>
 
         <Grid
-            Grid.Row="1">
+            Grid.RowSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="2*"/>
-                <RowDefinition Height="6*"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="1.5*"/>
             </Grid.RowDefinitions>
+
+
+            <Label 
+            Content="Manager&#xD;&#xA;Users"
+            FontSize="26"
+            FontWeight="Bold"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Grid.Column="0"
+            Grid.Row="0"/>
+
             <Button
             Content="PRODUCTS"
             Command="{Binding GoToProductsCommand}"
-            Grid.Row="0"
-            Height="30"
+            Grid.Row="1"
             Margin="10,0"
             VerticalAlignment="Center"/>
+
             <Button
             Content="SUPPLIES"
             Command="{Binding GoToSuppliesCommand}"
-            Grid.Row="1"
-            Height="30"
+            Grid.Row="2"
             Margin="10,0"
             VerticalAlignment="Center"/>
         </Grid>
@@ -111,7 +125,8 @@
                    Visibility="{Binding AddFieldsVisibility}"
                    Margin="10,0,0,0"
                    Grid.Row="3"
-                   HorizontalAlignment="Left"/>
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"/>
             <TextBox Text="{Binding NLogin}"
                    Visibility="{Binding AddFieldsVisibility}"
                      Grid.Row="3"
@@ -122,7 +137,8 @@
             <Label Content="Password"
                    Visibility="{Binding AddFieldsVisibility}"
                    Grid.Row="3"
-                   HorizontalAlignment="Center"/>
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"/>
             <TextBox Text="{Binding NPassword}"
                    Visibility="{Binding AddFieldsVisibility}"
                      Grid.Row="3"
@@ -134,7 +150,8 @@
                    Visibility="{Binding AddFieldsVisibility}"
                    Margin="0,0,10,0"
                    Grid.Row="3"
-                   HorizontalAlignment="Right"/>
+                   HorizontalAlignment="Right"
+                   VerticalAlignment="Top"/>
             <ComboBox ItemsSource="{Binding NPositions}"
                       SelectedItem="{Binding NPosition}"
                    Visibility="{Binding AddFieldsVisibility}"
@@ -150,7 +167,6 @@
                     Margin="30,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
-                    Height="30"
                     Width="100"/>
             <Button Command="{Binding DeleteUserCommand}"
                     Grid.Row="2"
@@ -159,16 +175,13 @@
                     Margin="30,0,30,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Height="30"
                     Width="100"/>
             <Button Command="{Binding AddUserCommand}" Content="ADD"
-                   Visibility="{Binding AddFieldsVisibility}"
-                    
+                    Visibility="{Binding AddFieldsVisibility}"
                     FontSize="25"
                     Background="LightGreen"
                     Grid.Row="4"
-                    Width="150"
-                    Height="35"/>
+                    Width="150"/>
 
         </Grid>
 

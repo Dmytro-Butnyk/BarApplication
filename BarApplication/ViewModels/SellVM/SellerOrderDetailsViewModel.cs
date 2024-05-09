@@ -1,21 +1,20 @@
-﻿using BarApplication.ViewModels.SellVM.Servises;
-using DB_Coursework;
-using DB_Coursework.Models.BaseClasses;
-using DB_Coursework.Models.Orders;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using BarApplication.ViewModels.SellVM.Servises;
+using DB_Coursework;
+using DB_Coursework.Models.BaseClasses;
+using DB_Coursework.Models.Orders;
+using Microsoft.EntityFrameworkCore;
 
 namespace BarApplication.ViewModels.SellVM
 {
     public class SellerOrderDetailsViewModel : ObservableObject
     {
-        private readonly BarContext _context = new();
+        private readonly BarContext _context;
         private double _quantity;
         private ObservableCollection<Order> _openedOrders;
         private Order _selectedOrder;
@@ -26,16 +25,16 @@ namespace BarApplication.ViewModels.SellVM
 
         public ICommand AddOrderDetail { get; }
         public ICommand DeleteOrderDetail { get; }
-
         public ICommand GoToOrders { get; }
 
         public SellerOrderDetailsViewModel(NavigationDataServiceSell ndss)
         {
+            _context = new BarContext();
             GoToOrders = ndss.GoToOrdersCommand;
 
             AddOrderDetail = new RelayCommand(async () => await AddOrderDetailAsync());
             DeleteOrderDetail = new RelayCommand(async () => await DeleteOrderDetailAsync());
-            Task.Run(async () => await LoadDataAsync());
+            LoadDataAsync().ConfigureAwait(false);
         }
 
         #region PROPERTIES
@@ -54,6 +53,7 @@ namespace BarApplication.ViewModels.SellVM
                 OnPropertyChanged(nameof(Quantity));
             }
         }
+
         public ObservableCollection<Product> Products
         {
             get => _products;
@@ -63,6 +63,7 @@ namespace BarApplication.ViewModels.SellVM
                 OnPropertyChanged(nameof(Products));
             }
         }
+
         public Product SelectedProduct
         {
             get => _selectedProduct;
@@ -72,6 +73,7 @@ namespace BarApplication.ViewModels.SellVM
                 OnPropertyChanged(nameof(SelectedProduct));
             }
         }
+
         public ObservableCollection<Order> OpenedOrders
         {
             get => _openedOrders;
@@ -81,17 +83,18 @@ namespace BarApplication.ViewModels.SellVM
                 OnPropertyChanged(nameof(OpenedOrders));
             }
         }
+
         public Order SelectedOrder
         {
-            get => _selectedOrder
-                ;
+            get => _selectedOrder;
             set
             {
                 _selectedOrder = value;
                 OnPropertyChanged(nameof(SelectedOrder));
-                Task.Run(LoadOrderDetailsAsync);
+                LoadOrderDetailsAsync().ConfigureAwait(false);
             }
         }
+
         public ObservableCollection<OrderDetail> OrderDetails
         {
             get => _orderDetails;
@@ -101,6 +104,7 @@ namespace BarApplication.ViewModels.SellVM
                 OnPropertyChanged(nameof(OrderDetails));
             }
         }
+
         public OrderDetail SelectedOrderDetail
         {
             get => _selectedOrderDetail;
@@ -119,7 +123,7 @@ namespace BarApplication.ViewModels.SellVM
             {
                 var orders = await _context.Orders
                     .Include(o => o.Table)
-                    .Where(o => o.IsOpened == false)
+                    .Where(o => !o.IsOpened)
                     .ToListAsync();
 
                 OpenedOrders = new ObservableCollection<Order>(orders);
@@ -129,6 +133,7 @@ namespace BarApplication.ViewModels.SellVM
                 MessageBox.Show($"Error loading opened orders: {ex.Message}");
             }
         }
+
         private async Task LoadProductsAsync()
         {
             try
@@ -143,6 +148,7 @@ namespace BarApplication.ViewModels.SellVM
                 MessageBox.Show($"Error loading products: {ex.Message}");
             }
         }
+
         private async Task LoadOrderDetailsAsync()
         {
             try
@@ -150,7 +156,8 @@ namespace BarApplication.ViewModels.SellVM
                 if (SelectedOrder == null)
                     return;
 
-                var orderDetails = await _context.OrderDetails.Include(od => od.Order)
+                var orderDetails = await _context.OrderDetails
+                    .Include(od => od.Order)
                     .Where(od => od.Order.Id == SelectedOrder.Id)
                     .ToListAsync();
 
@@ -161,6 +168,7 @@ namespace BarApplication.ViewModels.SellVM
                 MessageBox.Show($"Error loading order details: {ex.Message}");
             }
         }
+
         private async Task LoadDataAsync()
         {
             await LoadOpenedOrdersAsync();
@@ -185,7 +193,6 @@ namespace BarApplication.ViewModels.SellVM
                     return;
                 }
 
-                // Check if there is enough quantity of the selected product
                 if (SelectedProduct.Quantity < Quantity)
                 {
                     MessageBox.Show("Not enough quantity of the selected product!");
@@ -193,22 +200,11 @@ namespace BarApplication.ViewModels.SellVM
                 }
 
                 var newOrderDetail = new OrderDetail(SelectedProduct, Quantity, SelectedOrder);
-                _context.Products.FirstOrDefault(x => x.Id == newOrderDetail.Product.Id).Quantity -= newOrderDetail.Quantity;
+                SelectedProduct.Quantity -= Quantity;
                 _context.OrderDetails.Add(newOrderDetail);
                 await _context.SaveChangesAsync();
                 MessageBox.Show("Order detail added!");
-                await LoadDataAsync();
-            }
-            catch (DbUpdateException ex)
-            {
-                if (ex.InnerException is SqlException innerException && (innerException.Number == 50000 || innerException.Number == 50001))
-                {
-                    MessageBox.Show(innerException.Message);
-                }
-                else
-                {
-                    MessageBox.Show("An error occurred while adding the order detail.");
-                }
+                await LoadOrderDetailsAsync();
             }
             catch (Exception ex)
             {
@@ -226,16 +222,15 @@ namespace BarApplication.ViewModels.SellVM
             {
                 if (SelectedOrderDetail != null)
                 {
-                    _context.Products.FirstOrDefault(x => x.Id == SelectedOrderDetail.Product.Id).Quantity += SelectedOrderDetail.Quantity;
-                    _context.Remove(SelectedOrderDetail);
+                    SelectedOrderDetail.Product.Quantity += SelectedOrderDetail.Quantity;
+                    _context.OrderDetails.Remove(SelectedOrderDetail);
                     await _context.SaveChangesAsync();
+                    await LoadOrderDetailsAsync();
                 }
                 else
                 {
                     MessageBox.Show("Select order detail to delete!");
                 }
-
-                await LoadDataAsync();
             }
             catch (Exception ex)
             {

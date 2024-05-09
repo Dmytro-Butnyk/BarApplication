@@ -12,7 +12,7 @@ namespace BarApplication.ViewModels.AuthVM
     {
         private string _login;
         private SecureString _password;
-        
+
 
 
         public ICommand ButtonLogIn { get; }
@@ -52,15 +52,29 @@ namespace BarApplication.ViewModels.AuthVM
         {
             using (var context = new BarContext())
             {
-                var password = new NetworkCredential(string.Empty, Password).Password;
-                var user = context.Users.FirstOrDefault(x => x.Login == Login && x.Password == password);
-                if (user != null)
+                if (context.Users.ToList() == null)
                 {
-                    OpenWorkWindow(user);
+                    context.Add(new User("admin", "admin", "manager"));
+                    Login = "admin";
+                    Password = ToSecureString("admin");
+                    MessageBox.Show("Programm launched at first time\n" +
+                        "Manager account data:\n" +
+                        "Login: admin\n" +
+                        "Password: admin\n" +
+                        "You can add new managers or sellers after authorization.");
                 }
                 else
                 {
-                    MessageBox.Show("Wrong login or password!\nTry again or call your manager...");
+                    var password = new NetworkCredential(string.Empty, Password).Password;
+                    var user = context.Users.FirstOrDefault(x => x.Login == Login && x.Password == password);
+                    if (user != null)
+                    {
+                        OpenWorkWindow(user);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Wrong login or password!\nTry again or call your manager...");
+                    }
                 }
             }
         }
@@ -71,5 +85,19 @@ namespace BarApplication.ViewModels.AuthVM
             workWindow.Show();
             Application.Current.MainWindow.Close();
         }
+        private SecureString ToSecureString(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                throw new ArgumentException("Input string cannot be empty.", nameof(input));
+
+            var secureString = new SecureString();
+            foreach (char c in input)
+            {
+                secureString.AppendChar(c);
+            }
+            secureString.MakeReadOnly();
+            return secureString;
+        }
     }
+
 }
