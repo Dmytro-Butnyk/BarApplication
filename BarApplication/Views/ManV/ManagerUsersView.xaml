@@ -10,36 +10,16 @@
       Title="ManagerUsersView">
 
     <Page.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-        </Style>
-
-        <Style TargetType="Label">
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-        </Style>
-
-        <Style TargetType="Button">
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="10"/>
-        </Style>
-
-        <Style TargetType="CheckBox">
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="../Resources/ButtonIcons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="5.5*"/>
             <ColumnDefinition Width="5.5*"/>
         </Grid.ColumnDefinitions>
@@ -49,45 +29,70 @@
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
 
-
-        <Grid
-            Grid.RowSpan="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="1.5*"/>
-            </Grid.RowDefinitions>
-
-
-            <Label 
-            Content="Manager&#xD;&#xA;Users"
-            FontSize="26"
-            FontWeight="Bold"
+        <Border
+            x:Name="DropDownMenu"
+            Grid.RowSpan="3"
+            Panel.ZIndex="1"
+            Width="55"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Grid.Column="0"
-            Grid.Row="0"/>
+            Visibility="Visible"
+            BorderThickness="1"
+            BorderBrush="Black">
+            <Grid Background="AntiqueWhite"
+            Grid.RowSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
 
-            <Button
-            Content="PRODUCTS"
-            Command="{Binding GoToProductsCommand}"
-            Grid.Row="1"
-            Margin="10,0"
-            VerticalAlignment="Center"/>
+                <Button Name="OpenB"
+                        Click="Open_Grid"
+                        Grid.Column="1"
+                        Visibility="Visible"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Tag="{StaticResource MenuIcon}"/>
 
-            <Button
-            Content="SUPPLIES"
-            Command="{Binding GoToSuppliesCommand}"
-            Grid.Row="2"
-            Margin="10,0"
-            VerticalAlignment="Center"/>
-        </Grid>
+                <Button Name="HideB"
+                        Click="Hide_Grid"
+                        Grid.Column="1"
+                        Visibility="Hidden"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Tag="{StaticResource MenuIcon}"/>
+
+
+                <Label 
+                    Content="Manager&#xD;&#xA;Users"
+                    Margin="45,0,0,0"
+                    FontSize="26"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Grid.Column="0"
+                    Grid.Row="0"/>
+
+                <Button
+                    Content="PRODUCTS"
+                    Command="{Binding GoToProductsCommand}"
+                    Grid.Row="1"
+                    Style="{StaticResource MenuInterfaceButtonStyle}"
+                    Tag="{StaticResource ProductsIcon}"/>
+
+                <Button Command="{Binding GoToSuppliesCommand}"
+                        Style="{StaticResource MenuInterfaceButtonStyle}"
+                        Tag="{StaticResource SuppliesIcon}"
+                        Grid.Row="2">
+                    SUPPLIES
+                </Button>
+            </Grid>
+        </Border>
 
         <!-- USERS -->
         <Grid Background="Azure"
-              Grid.Column="1"
+              Margin="55, 10, 10, 10"
+              Grid.Column="0"
               Grid.Row="1">
 
             <Grid.RowDefinitions>
@@ -175,7 +180,7 @@
                     Margin="30,0,30,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Center"
-                    Width="100"/>
+                    Width="120"/>
             <Button Command="{Binding AddUserCommand}" Content="ADD"
                     Visibility="{Binding AddFieldsVisibility}"
                     FontSize="25"

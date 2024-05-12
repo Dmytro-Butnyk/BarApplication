@@ -27,9 +27,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\AuthorizationPageStyles.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -40,6 +37,15 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ManV\ManagerView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Resources\AuthorizationPageStyles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Resources\ButtonIcons.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Resources\ButtonStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SellV\SellerOrderDetailsView.xaml">

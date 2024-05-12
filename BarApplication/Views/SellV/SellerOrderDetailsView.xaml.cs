@@ -1,4 +1,5 @@
-﻿using BarApplication.ViewModels.SellVM;
+﻿using BarApplication.ViewModels;
+using BarApplication.ViewModels.SellVM;
 using BarApplication.ViewModels.SellVM.Servises;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,21 @@ namespace BarApplication.Views.SellV
         {
             InitializeComponent();
             DataContext = new SellerOrderDetailsViewModel(ndss);
+        }
+        public void Open_Grid(object sender, RoutedEventArgs e)
+        {
+            Animatic.SetElement(DropDownMenu);
+            Animatic.Show(55, 220, 0.4f);
+
+            OpenB.Visibility = Visibility.Hidden;
+            HideB.Visibility = Visibility.Visible;
+        }
+        public void Hide_Grid(object sender, RoutedEventArgs e)
+        {
+            Animatic.Show(220, 55, 0.2f);
+
+            OpenB.Visibility = Visibility.Visible;
+            HideB.Visibility = Visibility.Hidden;
         }
     }
 }

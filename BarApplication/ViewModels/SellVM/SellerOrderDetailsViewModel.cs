@@ -20,9 +20,9 @@ namespace BarApplication.ViewModels.SellVM
         private Order _selectedOrder;
         private ObservableCollection<Product> _products;
         private Product _selectedProduct;
+        private string _selectedProductQuantity;
         private ObservableCollection<OrderDetail> _orderDetails;
         private OrderDetail _selectedOrderDetail;
-
         public ICommand AddOrderDetail { get; }
         public ICommand DeleteOrderDetail { get; }
         public ICommand GoToOrders { get; }
@@ -70,6 +70,10 @@ namespace BarApplication.ViewModels.SellVM
             set
             {
                 _selectedProduct = value;
+                if (value != null)
+                    SelectedProductQuantity = $"Max: {SelectedProduct.Quantity}";
+                else
+                    SelectedProductQuantity = "";
                 OnPropertyChanged(nameof(SelectedProduct));
             }
         }
@@ -112,6 +116,16 @@ namespace BarApplication.ViewModels.SellVM
             {
                 _selectedOrderDetail = value;
                 OnPropertyChanged(nameof(SelectedOrderDetail));
+            }
+        }
+
+        public string SelectedProductQuantity
+        {
+            get => _selectedProductQuantity;
+            set
+            {
+                _selectedProductQuantity = value;
+                OnPropertyChanged(nameof(SelectedProductQuantity));
             }
         }
         #endregion
@@ -223,6 +237,8 @@ namespace BarApplication.ViewModels.SellVM
                 if (SelectedOrderDetail != null)
                 {
                     SelectedOrderDetail.Product.Quantity += SelectedOrderDetail.Quantity;
+                    SelectedProduct = SelectedOrderDetail.Product;
+                    SelectedProductQuantity = $"Max: {SelectedProduct.Quantity}";
                     _context.OrderDetails.Remove(SelectedOrderDetail);
                     await _context.SaveChangesAsync();
                     await LoadOrderDetailsAsync();

@@ -20,6 +20,7 @@ namespace BarApplication.ViewModels.AuthVM
         public AuthorizationViewModel()
         {
             ButtonLogIn = new RelayCommand(LogInCommand);
+            CheckForEmptyUsers();
         }
 
         public string Login
@@ -52,29 +53,16 @@ namespace BarApplication.ViewModels.AuthVM
         {
             using (var context = new BarContext())
             {
-                if (context.Users.ToList() == null)
+
+                var password = new NetworkCredential(string.Empty, Password).Password;
+                var user = context.Users.FirstOrDefault(x => x.Login == Login && x.Password == password);
+                if (user != null)
                 {
-                    context.Add(new User("admin", "admin", "manager"));
-                    Login = "admin";
-                    Password = ToSecureString("admin");
-                    MessageBox.Show("Programm launched at first time\n" +
-                        "Manager account data:\n" +
-                        "Login: admin\n" +
-                        "Password: admin\n" +
-                        "You can add new managers or sellers after authorization.");
+                    OpenWorkWindow(user);
                 }
                 else
                 {
-                    var password = new NetworkCredential(string.Empty, Password).Password;
-                    var user = context.Users.FirstOrDefault(x => x.Login == Login && x.Password == password);
-                    if (user != null)
-                    {
-                        OpenWorkWindow(user);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Wrong login or password!\nTry again or call your manager...");
-                    }
+                    MessageBox.Show("Wrong login or password!\nTry again or call your manager...");
                 }
             }
         }
@@ -97,6 +85,22 @@ namespace BarApplication.ViewModels.AuthVM
             }
             secureString.MakeReadOnly();
             return secureString;
+        }
+        private void CheckForEmptyUsers()
+        {
+            using (BarContext context = new())
+                if (context.Users.ToList().Count == 0)
+                {
+                    context.Add(new User("admin", "admin", "Manager"));
+                    context.SaveChanges();
+                    Login = "admin";
+                    Password = ToSecureString("admin");
+                    MessageBox.Show("Programm launched at first time\n" +
+                        "Manager account data:\n" +
+                        "Login: admin\n" +
+                        "Password: admin\n" +
+                        "You can add new managers or sellers after authorization.");
+                }
         }
     }
 

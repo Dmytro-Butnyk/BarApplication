@@ -10,36 +10,16 @@
       Title="ManagerView">
 
     <Page.Resources>
-        <Style TargetType="TextBlock">
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="TextWrapping" Value="Wrap"/>
-        </Style>
-
-        <Style TargetType="Label">
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-        </Style>
-
-        <Style TargetType="Button">
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="10"/>
-        </Style>
-
-        <Style TargetType="CheckBox">
-            <Setter Property="FontFamily" Value="Arial"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="../Resources/ButtonIcons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Page.Resources>
 
     <Grid Background="AliceBlue">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
@@ -48,125 +28,154 @@
             <RowDefinition Height="8*"/>
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
-        
-        
-        <Grid
-            Grid.RowSpan="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="2*"/>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="1.5*"/>
-            </Grid.RowDefinitions>
-            <Label 
-            Content="Manager&#xD;&#xA;Products"
-            FontSize="26"
-            FontWeight="Bold"
-            HorizontalContentAlignment="Left"
-            VerticalAlignment="Center"
-            Grid.Column="0"
-            Grid.Row="0"/>
-        <Button
-            Content="SUPPLIES"
-            Command="{Binding GoToSuppliesCommand}"
-            Grid.Row="1"
-            Margin="10,0"
-            VerticalAlignment="Center"/>
-        <Button
-            Content="USERS"
-            Command="{Binding GoToUsersCommand}"
-            Grid.Row="2"
-            Margin="10,0"
-            VerticalAlignment="Center"/>
-        </Grid>
-        
-        <!--ALL PRODUCTS-->
-        <ListBox 
+
+        <Border
+            x:Name="DropDownMenu"
+            Grid.RowSpan="3"
+            Panel.ZIndex="1"
+            Width="55"
+            HorizontalAlignment="Left"
+            Visibility="Visible"
+            BorderThickness="1"
+            BorderBrush="Black">
+            
+            <Grid Background="AntiqueWhite"
+                Grid.RowSpan="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="4*"/>
+                    <RowDefinition Height="1.5*"/>
+                </Grid.RowDefinitions>
+
+                <Button Name="OpenB"
+                        Click="Open_Grid"
+                        Grid.Column="1"
+                        Visibility="Visible"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Tag="{StaticResource MenuIcon}"/>
+
+                <Button Name="HideB"
+                        Click="Hide_Grid"
+                        Grid.Column="1"
+                        Visibility="Hidden"
+                        Style="{StaticResource MenuButtonStyle}"
+                        Tag="{StaticResource MenuIcon}"/>
+
+                <Label 
+                    Content="Manager&#xD;&#xA;Products"
+                    Margin="45,0,0,0"
+                    FontSize="26"
+                    FontWeight="Bold"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Grid.Column="0"
+                    Grid.Row="0"/>
+                <Button Command="{Binding GoToSuppliesCommand}"
+                        Style="{StaticResource MenuInterfaceButtonStyle}"
+                        Tag="{StaticResource SuppliesIcon}"
+                        Grid.Row="1">
+                    SUPPLIES
+                </Button>
+                <Button
+                    Command="{Binding GoToUsersCommand}"
+                    Style="{StaticResource MenuInterfaceButtonStyle}"
+                    Tag="{StaticResource UsersIcon}"
+                    Grid.Row="2">
+                    USERS
+                </Button>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1"
+              Margin="55,10,10,10">
+            <!--ALL PRODUCTS-->
+            <ListBox 
             ItemsSource="{Binding Products}"
             SelectedItem="{Binding SelectedProduct}"
-            Grid.Column="1"
+            Grid.Column="0"
             Grid.Row="1">
 
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Background="Azure">
-                        <TextBlock Text="Product name: "/>
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding Name}" Margin="10"/>
-                        </Border>
-                        <TextBlock Text="Price: " />
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding Price}" Margin="10"/>
-                        </Border>
-                        <TextBlock Text="Quantity: " />
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding Quantity}" Margin="10"/>
-                        </Border>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <!--DRINKS-->
-        <ListBox 
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Background="Azure">
+                            <TextBlock Text="Product name: "/>
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding Name}" Margin="10"/>
+                            </Border>
+                            <TextBlock Text="Price: " />
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding Price}" Margin="10"/>
+                            </Border>
+                            <TextBlock Text="Quantity: " />
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding Quantity}" Margin="10"/>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <!--DRINKS-->
+            <ListBox 
             ItemsSource="{Binding AlcoholDrinks}"
             SelectedItem="{Binding SelectedProduct}"
-            Grid.Column="1"
+            Grid.Column="0"
             Grid.Row="1"
             Visibility="{Binding IsVisibleAlcoholDrinks}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Background="Azure">
-                        <TextBlock Text="Drink name: "/>
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding Name}" Margin="10"/>
-                        </Border>
-                        <TextBlock Text="Price: " />
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding Price}" Margin="10"/>
-                        </Border>
-                        <TextBlock Text="Quantity: " />
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding Quantity}" Margin="10"/>
-                        </Border>
-                        <TextBlock Text="ABV: " />
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding ABV}" Margin="10"/>
-                        </Border>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <!--SNACKS-->
-        <ListBox 
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Background="Azure">
+                            <TextBlock Text="Drink name: "/>
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding Name}" Margin="10"/>
+                            </Border>
+                            <TextBlock Text="Price: " />
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding Price}" Margin="10"/>
+                            </Border>
+                            <TextBlock Text="Quantity: " />
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding Quantity}" Margin="10"/>
+                            </Border>
+                            <TextBlock Text="ABV: " />
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding ABV}" Margin="10"/>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <!--SNACKS-->
+            <ListBox 
             ItemsSource="{Binding Snacks}"
             SelectedItem="{Binding SelectedProduct}"
-            Grid.Column="1"
+            Grid.Column="0"
             Grid.Row="1"
             Visibility="{Binding IsVisibleSnacks}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Background="Azure">
-                        <TextBlock Text="Snack name: "/>
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding Name}" Margin="10"/>
-                        </Border>
-                        <TextBlock Text="Price: " />
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding Price}" Margin="10"/>
-                        </Border>
-                        <TextBlock Text="Quantity: " />
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding Quantity}" Margin="10"/>
-                        </Border>
-                        <TextBlock Text="Type: " />
-                        <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                            <TextBlock Text="{Binding Type}" Margin="10"/>
-                        </Border>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" Background="Azure">
+                            <TextBlock Text="Snack name: "/>
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding Name}" Margin="10"/>
+                            </Border>
+                            <TextBlock Text="Price: " />
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding Price}" Margin="10"/>
+                            </Border>
+                            <TextBlock Text="Quantity: " />
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding Quantity}" Margin="10"/>
+                            </Border>
+                            <TextBlock Text="Type: " />
+                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
+                                <TextBlock Text="{Binding Type}" Margin="10"/>
+                            </Border>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
 
         <Grid
             Grid.Column="2"
@@ -183,7 +192,6 @@
             VerticalAlignment="Center"
             Margin="10,10"
             Background="LightGreen"
-            Height="30"
             Visibility="{Binding IsVisibleAdditionPoles}"/>
         <Button 
             Command="{Binding DeleteProductButton}"
@@ -205,8 +213,9 @@
 
             <!--NEW TABLE-->
         <Grid
-            Grid.Column="1"
+            Grid.Column="0"
             Grid.Row="2"
+            Margin="55,10,10,10"
             Visibility="{Binding IsVisibleNewTableFields}">
             
             <Label
@@ -232,8 +241,9 @@
         </Grid>
 
         <Grid
-            Grid.Column="1"
+            Grid.Column="0"
             Grid.Row="2"
+            Margin="55,10,10,10"
             Visibility="{Binding IsVisibleAdditionPoles}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>

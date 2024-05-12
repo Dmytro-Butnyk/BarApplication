@@ -68,7 +68,6 @@ O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-window
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\BarApplication.pdb
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\BarApplication.genruntimeconfig.cache
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\ref\BarApplication.dll
-O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\AuthorizationPageStyles.baml
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\WorkWindow.g.cs
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\WorkWindow.baml
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Debug\net8.0-windows\Humanizer.dll
@@ -148,3 +147,6 @@ O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-window
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\ManV\ManagerUsersView.baml
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\SellV\SellerOrderDetailsView.g.cs
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\SellV\SellerOrderDetailsView.baml
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\Resources\AuthorizationPageStyles.baml
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\Resources\ButtonIcons.baml
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\Resources\ButtonStyles.baml
