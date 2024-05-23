@@ -69,9 +69,7 @@ namespace BarApplication.ViewModels.AuthVM
 
         private void OpenWorkWindow(User user)
         {
-            var workWindow = new WorkWindow(user);
-            workWindow.Show();
-            Application.Current.MainWindow.Close();
+            new WorkWindow(user).Show();
         }
         private SecureString ToSecureString(string input)
         {

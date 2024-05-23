@@ -5,6 +5,6 @@
              xmlns:local="clr-namespace:BarApplication"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
+        <FontFamily x:Key="BigshotOne">/BarApplication;component/Views/Fonts/#Bigshot One</FontFamily>
     </Application.Resources>
 </Application>

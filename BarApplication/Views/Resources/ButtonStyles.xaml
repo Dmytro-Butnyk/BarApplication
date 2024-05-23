@@ -26,21 +26,74 @@
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="BorderBrush" Value="Black"/>
         <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontFamily" Value="{StaticResource BigshotOne}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border CornerRadius="10" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{TemplateBinding Tag}" 
-                               Margin="2"
-                               Height="35"
-                               Width="35"/>
-                            <ContentPresenter Margin="45,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        </StackPanel>
+                        <Grid>
+                            <Border CornerRadius="10" Background="AntiqueWhite" Margin="0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{TemplateBinding Tag}" 
+                                           Margin="2, 15"
+                                           Height="35"
+                                           Width="35"/>
+                                    <ContentPresenter Margin="45,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="MenuInterfaceButtonStyleSeller" TargetType="Button">
+        <Setter Property="Margin" Value="5,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontFamily" Value="{StaticResource BigshotOne}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Border CornerRadius="10" Background="#1A1A1A" Margin="0">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="{TemplateBinding Tag}" 
+                                       Margin="2, 15"
+                                       Height="35"
+                                       Width="35"/>
+                                    <ContentPresenter Margin="45,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="RoundedCornerButtonStyle" TargetType="Button">
+        <Setter Property="BorderBrush" Value="Black"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="FontFamily" Value="{StaticResource BigshotOne}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border CornerRadius="10" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
 </ResourceDictionary>

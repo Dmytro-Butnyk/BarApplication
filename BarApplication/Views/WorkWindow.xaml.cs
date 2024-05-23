@@ -27,7 +27,7 @@ namespace BarApplication.Views
                 var frame = new SellerView(ndss);
                 Content = frame;
             }
-
+            Application.Current.MainWindow.Close();
         }
     }
 }

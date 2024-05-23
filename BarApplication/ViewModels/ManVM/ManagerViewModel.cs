@@ -45,11 +45,13 @@ namespace BarApplication.ViewModels.ManVM
         public ICommand AddTableCommand { get; set; }
         public ICommand ShowTableFields { get; set; }
         public ICommand DeleteTablesCommand { get; set; }
+        public ICommand GoToAuthorization { get; }
 
         public ManagerViewModel(NavigationDataServiceMan nbvm)
         {
             GoToSuppliesCommand = nbvm.GoToSuppliesPageCommand;
             GoToUsersCommand = nbvm.GoToUsersPageCommand;
+            GoToAuthorization = nbvm.GoToAuthorizationWindowCommand;
 
             InitializeCommands();
             LoadData();
@@ -138,10 +140,14 @@ namespace BarApplication.ViewModels.ManVM
             set
             {
                 if (decimal.TryParse(value, out decimal price) && price > 0)
+                {
                     _pRegistration[1] = value;
+                }
                 else
+                {
                     MessageBox.Show("Invalid price format");
-                OnPropertyChanged(nameof(ProductPrice));
+                }
+                    OnPropertyChanged(nameof(ProductPrice));
             }
         }
 
@@ -269,7 +275,7 @@ namespace BarApplication.ViewModels.ManVM
             }
 
             ProductName = "";
-            ProductPrice = "0";
+            ProductPrice = "1";
             ProductSpecialization = "";
 
             try

@@ -26,11 +26,13 @@ namespace BarApplication.ViewModels.SellVM
         public ICommand AddOrderDetail { get; }
         public ICommand DeleteOrderDetail { get; }
         public ICommand GoToOrders { get; }
+        public ICommand GoToAuthorization { get; }
 
         public SellerOrderDetailsViewModel(NavigationDataServiceSell ndss)
         {
             _context = new BarContext();
             GoToOrders = ndss.GoToOrdersCommand;
+            GoToAuthorization = ndss.GoToAuthorizationWindowCommand;
 
             AddOrderDetail = new RelayCommand(async () => await AddOrderDetailAsync());
             DeleteOrderDetail = new RelayCommand(async () => await DeleteOrderDetailAsync());

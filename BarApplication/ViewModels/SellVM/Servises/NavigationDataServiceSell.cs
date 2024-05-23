@@ -16,12 +16,14 @@ namespace BarApplication.ViewModels.SellVM.Servises
         
         public ICommand GoToOrdersCommand { get; }
         public ICommand GoToOrderDetailCommand { get; }
+        public ICommand GoToAuthorizationWindowCommand { get; }
 
         public NavigationDataServiceSell(WorkWindow workWindow)
         {
             _workWindow = workWindow;
             GoToOrdersCommand = new RelayCommand(OrdersNavigation);
             GoToOrderDetailCommand = new RelayCommand(OrderDetailsNavigation);
+            GoToAuthorizationWindowCommand = new RelayCommand(AuthorizationNavigation);
         }
         private async void OrdersNavigation()
         {
@@ -30,6 +32,12 @@ namespace BarApplication.ViewModels.SellVM.Servises
         private async void OrderDetailsNavigation()
         {
             _workWindow.Content = new SellerOrderDetailsView(this);
+        }
+        private void AuthorizationNavigation()
+        {
+            new MainWindow().Show();
+            _workWindow.Content = new();
+            _workWindow.Close();
         }
     }
 }

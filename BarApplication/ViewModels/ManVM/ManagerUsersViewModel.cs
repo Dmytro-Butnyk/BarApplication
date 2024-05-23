@@ -28,6 +28,7 @@ namespace BarApplication.ViewModels.ManVM
 
         public ICommand GoToSuppliesCommand { get; }
         public ICommand GoToProductsCommand {  get; }
+        public ICommand GoToAuthorization { get; }
 
         public ManagerUsersViewModel(NavigationDataServiceMan nbvm)
         {
@@ -35,6 +36,7 @@ namespace BarApplication.ViewModels.ManVM
 
             GoToSuppliesCommand = nbvm.GoToSuppliesPageCommand;
             GoToProductsCommand = nbvm.GoToProductsPageCommand;
+            GoToAuthorization = nbvm.GoToAuthorizationWindowCommand;
 
             var usersRefreshTimer = new DispatcherTimer();
             usersRefreshTimer.Tick += async (sender, e) => await LoadUsers();

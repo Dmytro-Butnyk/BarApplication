@@ -17,8 +17,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Page.Resources>
-    
-    <Grid Background="AliceBlue">
+
+    <Grid Background="#1A1A1A">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="6*"/>
@@ -29,16 +29,37 @@
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
 
+        <Grid Grid.ColumnSpan="2">
+            <StackPanel Orientation="Vertical">
+                <Label Content="SUPPLIES"
+                   Style="{StaticResource WhiteText}"
+                       FontSize="50"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+                <Label Content="MANAGER"
+                   Style="{StaticResource WhiteText}"
+                   Padding="0,0,0,5"
+                       FontSize="26"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+            </StackPanel>
+
+            <Image Source="../Resources/Images/AB_icon.png"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Height="90"/>
+        </Grid>
+
         <Border
             x:Name="DropDownMenu"
             Grid.RowSpan="3"
-            Panel.ZIndex="1"
+            Panel.ZIndex="2"
             Width="55"
             HorizontalAlignment="Left"
             Visibility="Visible"
             BorderThickness="1"
             BorderBrush="Black">
-            <Grid Background="AntiqueWhite"
+            <Grid Background="DarkRed"
             Grid.RowSpan="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
@@ -82,13 +103,21 @@
                     Grid.Row="2"
                     Style="{StaticResource MenuInterfaceButtonStyle}"
                     Tag="{StaticResource UsersIcon}"/>
+
+                <Button
+                    Command="{Binding GoToAuthorization}"
+                    Content="AUTH"
+                    Grid.Row="4"
+                    Style="{StaticResource MenuInterfaceButtonStyle}"
+                    Tag="{StaticResource AuthorizationManIcon}"/>
             </Grid>
         </Border>
 
         <!--ADD SUPPLIES-->
         <Grid
-            Background="Azure"
-            Margin="55,10,10,10"
+            Panel.ZIndex="1"
+            Background="#1A1A1A"
+            Margin="65,10,10,10"
             Grid.Column="0"
             Grid.Row="1">
 
@@ -102,14 +131,14 @@
             
             <Label
                 Content="Supply information"
-                
+                Style="{StaticResource WhiteText}"
                 FontSize="26"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"/>
 
             <Label
                 Content="Product:"
-                
+                Style="{StaticResource WhiteText}"
                 FontSize="16"
                 Grid.Row="1"
                 Margin="20,0"
@@ -128,7 +157,7 @@
 
             <Label
                 Content="Quantity:"
-                
+                Style="{StaticResource WhiteText}"
                 FontSize="16"
                 Grid.Row="2"
                 Margin="20,0"
@@ -145,7 +174,7 @@
 
             <Label
                 Content="Supply time:"
-                
+                Style="{StaticResource WhiteText}"
                 FontSize="16"
                 Grid.Row="3"
                 Margin="20,0"
@@ -154,8 +183,8 @@
 
             <Label
                 Content="{Binding SupplyDate}"
-                
-                FontSize="16"
+                Style="{StaticResource WhiteText}"
+                FontSize="20"
                 Grid.Row="3"
                 Margin="30,0"
                 HorizontalAlignment="Right"
@@ -174,29 +203,27 @@
         <!--SUPPLIES LIST-->
         <Grid
             Background="AntiqueWhite"
-            Grid.Column="2"
+            Grid.ColumnSpan="2"
             Grid.Row="1">
 
-            <ListBox 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1.2*"/>
+            </Grid.ColumnDefinitions>
+            
+            <DataGrid 
                 ItemsSource="{Binding Supplies}"
                 Grid.Column="1"
                 Grid.Row="1"
-                Background="Transparent">
-
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Background="Azure">
-                            <TextBlock Text="Product name: "/>
-                            <TextBlock Text="{Binding Product.Name}" Margin="10"/>
-                            <TextBlock Text="Quantity: " />
-                            <TextBlock Text="{Binding Quantity}" Margin="10"/>
-                            <TextBlock Text="Supply time: " />
-                            <TextBlock Text="{Binding SupplyTime}" Margin="10"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-
+                Background="Transparent"
+                AutoGenerateColumns="False"
+                IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Product name" Binding="{Binding Product.Name}" Width="*" />
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*" />
+                    <DataGridTextColumn Header="Supply time" Binding="{Binding SupplyTime}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
         
     </Grid>

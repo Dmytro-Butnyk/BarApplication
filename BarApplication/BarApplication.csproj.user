@@ -48,6 +48,9 @@
     <Page Update="Views\Resources\ButtonStyles.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\Resources\PlaceholderTextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\SellV\SellerOrderDetailsView.xaml">
       <SubType>Designer</SubType>
     </Page>

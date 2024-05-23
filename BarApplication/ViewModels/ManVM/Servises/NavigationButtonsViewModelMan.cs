@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -18,14 +19,17 @@ namespace BarApplication.ViewModels.ManVM
         public ICommand GoToSuppliesPageCommand { get; }
         public ICommand GoToProductsPageCommand { get; }
         public ICommand GoToUsersPageCommand { get; }
+        public ICommand GoToAuthorizationWindowCommand { get; }
 
         public NavigationDataServiceMan(WorkWindow workWindow, User activeUser)
         {
             _workWindow = workWindow;
             _activeUser = activeUser;
+
             GoToSuppliesPageCommand = new RelayCommand(SuppliesNavigation);
             GoToProductsPageCommand = new RelayCommand(ProductsNavigation);
             GoToUsersPageCommand = new RelayCommand(UsersNavigation);
+            GoToAuthorizationWindowCommand = new RelayCommand(AuthorizationNavigation);
         }
         public User ActiveUser
         {
@@ -49,6 +53,14 @@ namespace BarApplication.ViewModels.ManVM
         private void UsersNavigation()
         {
             _workWindow.Content = new ManagerUsersView(this);
+        }
+
+        private void AuthorizationNavigation()
+        {
+            MainWindow window = new MainWindow();
+            window.Show();
+            _workWindow.Content = new();
+            _workWindow.Close();
         }
     }
 }

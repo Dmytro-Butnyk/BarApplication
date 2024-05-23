@@ -18,7 +18,7 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <Grid Background="AliceBlue">
+    <Grid Background="#1A1A1A">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="8*"/>
             <ColumnDefinition Width="3*"/>
@@ -28,6 +28,27 @@
             <RowDefinition Height="8*"/>
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
+
+        <Grid Grid.ColumnSpan="2">
+            <StackPanel Orientation="Vertical">
+                <Label Content="PRODUCTS"
+                   Style="{StaticResource WhiteText}"
+                       FontSize="50"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+                <Label Content="MANAGER"
+                   Style="{StaticResource WhiteText}"
+                   Padding="0,0,0,5"
+                       FontSize="26"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+            </StackPanel>
+
+            <Image Source="../Resources/Images/AB_icon.png"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Height="90"/>
+        </Grid>
 
         <Border
             x:Name="DropDownMenu"
@@ -39,7 +60,7 @@
             BorderThickness="1"
             BorderBrush="Black">
             
-            <Grid Background="AntiqueWhite"
+            <Grid Background="DarkRed"
                 Grid.RowSpan="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="2*"/>
@@ -85,96 +106,78 @@
                     Grid.Row="2">
                     USERS
                 </Button>
+
+                <Button
+                    Command="{Binding GoToAuthorization}"
+                    Content="AUTH"
+                    Grid.Row="4"
+                    Style="{StaticResource MenuInterfaceButtonStyle}"
+                    Tag="{StaticResource AuthorizationManIcon}"/>
             </Grid>
         </Border>
         <Grid Grid.Row="1"
-              Margin="55,10,10,10">
-            <!--ALL PRODUCTS-->
-            <ListBox 
-            ItemsSource="{Binding Products}"
-            SelectedItem="{Binding SelectedProduct}"
-            Grid.Column="0"
-            Grid.Row="1">
+              Grid.ColumnSpan="2"
+              Background="AntiqueWhite"
+              Margin="55,0,0,0">
 
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Background="Azure">
-                            <TextBlock Text="Product name: "/>
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding Name}" Margin="10"/>
-                            </Border>
-                            <TextBlock Text="Price: " />
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding Price}" Margin="10"/>
-                            </Border>
-                            <TextBlock Text="Quantity: " />
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding Quantity}" Margin="10"/>
-                            </Border>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <!--ALL PRODUCTS-->
+            <DataGrid 
+                Margin="10"
+                ItemsSource="{Binding Products}"
+                SelectedItem="{Binding SelectedProduct}"
+                Grid.Column="0"
+                Grid.Row="1"
+                RowHeight="30"
+                AutoGenerateColumns="False"
+                IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Product name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
             <!--DRINKS-->
-            <ListBox 
-            ItemsSource="{Binding AlcoholDrinks}"
-            SelectedItem="{Binding SelectedProduct}"
-            Grid.Column="0"
-            Grid.Row="1"
-            Visibility="{Binding IsVisibleAlcoholDrinks}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Background="Azure">
-                            <TextBlock Text="Drink name: "/>
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding Name}" Margin="10"/>
-                            </Border>
-                            <TextBlock Text="Price: " />
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding Price}" Margin="10"/>
-                            </Border>
-                            <TextBlock Text="Quantity: " />
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding Quantity}" Margin="10"/>
-                            </Border>
-                            <TextBlock Text="ABV: " />
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding ABV}" Margin="10"/>
-                            </Border>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <DataGrid 
+                Margin="10"
+                ItemsSource="{Binding AlcoholDrinks}"
+                SelectedItem="{Binding SelectedProduct}"
+                Grid.Column="0"
+                Grid.Row="1"
+                RowHeight="30"
+                Visibility="{Binding IsVisibleAlcoholDrinks}"
+                AutoGenerateColumns="False"
+                IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Drink name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                    <DataGridTextColumn Header="ABV" Binding="{Binding ABV}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
             <!--SNACKS-->
-            <ListBox 
-            ItemsSource="{Binding Snacks}"
-            SelectedItem="{Binding SelectedProduct}"
-            Grid.Column="0"
-            Grid.Row="1"
-            Visibility="{Binding IsVisibleSnacks}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Background="Azure">
-                            <TextBlock Text="Snack name: "/>
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding Name}" Margin="10"/>
-                            </Border>
-                            <TextBlock Text="Price: " />
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding Price}" Margin="10"/>
-                            </Border>
-                            <TextBlock Text="Quantity: " />
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding Quantity}" Margin="10"/>
-                            </Border>
-                            <TextBlock Text="Type: " />
-                            <Border BorderThickness="1" BorderBrush="Black" Margin="0, 20">
-                                <TextBlock Text="{Binding Type}" Margin="10"/>
-                            </Border>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <DataGrid 
+                Margin="10"
+                ItemsSource="{Binding Snacks}"
+                SelectedItem="{Binding SelectedProduct}"
+                Grid.Column="0"
+                Grid.Row="1"
+                RowHeight="30"
+                Visibility="{Binding IsVisibleSnacks}"
+                AutoGenerateColumns="False"
+                IsReadOnly="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Snack name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Price" Binding="{Binding Price}" Width="*"/>
+                    <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity}" Width="*"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
         </Grid>
 
         <Grid
@@ -186,27 +189,27 @@
             </Grid.ColumnDefinitions>
         <!--PRODUCTS-->
         <Button 
+            Style="{StaticResource RoundedCornerButtonStyle}"
             Content="Add"
             Command="{Binding AddProductButton}"
             Grid.Column="0"
-            VerticalAlignment="Center"
-            Margin="10,10"
+            Margin="10,15"
             Background="LightGreen"
             Visibility="{Binding IsVisibleAdditionPoles}"/>
         <Button 
+            Style="{StaticResource RoundedCornerButtonStyle}"
             Command="{Binding DeleteProductButton}"
             Content="Delete"
             Grid.Column="1"
-            VerticalAlignment="Center"
-            Margin="10,10"
+            Margin="10,15"
             Background="Red"/>
         <!--TABLES-->
             <Button 
+                Style="{StaticResource RoundedCornerButtonStyle}"
                 Content="Add"
                 Command="{Binding AddTableCommand}"
                 Grid.Column="0"
-                VerticalAlignment="Center"
-                Margin="10,10"
+                Margin="10, 15"
                 Background="LightGreen"
                 Visibility="{Binding IsVisibleNewTableFields}"/>
         </Grid>
@@ -219,6 +222,7 @@
             Visibility="{Binding IsVisibleNewTableFields}">
             
             <Label
+                Style="{StaticResource WhiteText}"
                 Content="Table number:"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"/>
@@ -230,10 +234,10 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"/>
             <Button 
+                Style="{StaticResource RoundedCornerButtonStyle}"
                 Command="{Binding DeleteTablesCommand}"
                 Content="Delete all tables"
                 Grid.Column="1"
-                VerticalAlignment="Center"
                 HorizontalAlignment="Right"
                 Margin="10,10"
                 Background="Red"/>
@@ -253,6 +257,7 @@
 
             <!--NEW PRODUCT-->
             <Label
+                Style="{StaticResource WhiteText}"
                 Content="Product name:"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"/>
@@ -264,6 +269,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"/>
             <Label
+                Style="{StaticResource WhiteText}"
                 Content="Product price:"
                 Grid.Column="1"
                 VerticalAlignment="Top"
@@ -277,6 +283,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"/>
             <Label
+                Style="{StaticResource WhiteText}"
                 Content="{Binding LabelProductType}"
                 Grid.Column="2"
                 VerticalAlignment="Top"
@@ -293,7 +300,10 @@
 
         <Grid
             Grid.Column="2"
-            Grid.Row="1">
+            Grid.Row="1"
+            Background="#1A1A1A"
+            Margin="10">
+            
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
@@ -306,27 +316,42 @@
             </Grid.RowDefinitions>
 
             <Button
+                Style="{StaticResource RoundedCornerButtonStyle}"
+                Background="Moccasin"
+                Margin="10, 3"
                 Content="SHOW ALL"
                 Command="{Binding ShowProductsButton}"
                 Grid.Row="0"/>
             <Button
+                Style="{StaticResource RoundedCornerButtonStyle}"
+                Background="Moccasin"
+                Margin="10, 3"
                 Content="SHOW DRINKS"
                 Command="{Binding ShowAlcoholDrinksButton}"
                 Grid.Row="1"/>
             <Button
+                Style="{StaticResource RoundedCornerButtonStyle}"
+                Background="Moccasin"
+                Margin="10, 3"
                 Content="SHOW SNACKS"
                 Command="{Binding ShowSnacksButton}"
                 Grid.Row="2"/>
 
             <Button
+                Style="{StaticResource RoundedCornerButtonStyle}"
+                Margin="10, 3"
                 Content="ADD DRINK"
                 Command="{Binding AddDrinkButton}"
                 Grid.Row="4"/>
             <Button
+                Style="{StaticResource RoundedCornerButtonStyle}"
+                Margin="10, 3"
                 Content="ADD SNACK"
                 Command="{Binding AddSnackButton}"
                 Grid.Row="5"/>
             <Button
+                Style="{StaticResource RoundedCornerButtonStyle}"
+                Margin="10, 3"
                 Content="ADD TABLE"
                 Command="{Binding ShowTableFields}"
                 Grid.Row="6"/>

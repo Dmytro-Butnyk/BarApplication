@@ -25,11 +25,14 @@ namespace BarApplication.ViewModels.SellVM
         public ICommand ShowOpenedCommand { get; }
         public ICommand ShowClosedCommand { get; }
         public ICommand GoToOrderDetails { get; }
+        public ICommand GoToAuthorization { get; }
 
         public SellerViewModel(NavigationDataServiceSell ndss)
         {
             _context = new BarContext();
             GoToOrderDetails = ndss.GoToOrderDetailCommand;
+            GoToAuthorization = ndss.GoToAuthorizationWindowCommand;
+
             AddOrderCommand = new RelayCommand(async () => await AddOrderAsync());
             CloseOrderCommand = new RelayCommand(async () => await CloseOrderAsync());
             ShowClosedCommand = new RelayCommand(async () => await LoadOrdersAsync(false));
@@ -147,7 +150,7 @@ namespace BarApplication.ViewModels.SellVM
         private async Task LoadOrdersAsync(bool isOpened)
         {
             Orders = new ObservableCollection<Order>(await _context.Orders.Where(x => x.IsOpened == !isOpened).ToListAsync());
-            UpdateButtonColors(!isOpened ? Colors.White : Colors.Aqua, !isOpened ? Colors.Aqua : Colors.White);
+            UpdateButtonColors(!isOpened ? Colors.Transparent : Colors.DimGray, !isOpened ? Colors.DimGray : Colors.Transparent);
         }
 
         private void UpdateButtonColors(Color openedColor, Color closedColor)

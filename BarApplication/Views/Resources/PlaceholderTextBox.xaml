@@ -1,0 +1,50 @@
+﻿<!-- PlaceholderTextBoxStyle.xaml -->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- Определение стиля с параметрами -->
+    <Style x:Key="PlaceholderTextBox" TargetType="TextBox">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                            <Grid>
+                                <!-- Использование привязки к свойству PlaceholderText через TemplateBinding -->
+                                <TextBlock x:Name="PlaceholderTextBlock"
+                                       Text="{TemplateBinding Tag}"
+                                       Foreground="Gray"
+                                       Margin="0"
+                                       Visibility="Visible"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                                <ScrollViewer x:Name="PART_ContentHost"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="PlaceholderTextBlock" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="False">
+                            <Setter TargetName="PlaceholderTextBlock" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                            <Setter TargetName="PlaceholderTextBlock" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

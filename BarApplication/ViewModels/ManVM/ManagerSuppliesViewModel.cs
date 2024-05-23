@@ -24,11 +24,15 @@ namespace BarApplication.ViewModels.ManVM
 
         public ICommand GoToProductsCommand { get; }
         public ICommand GoToUsersCommand { get; }
+        public ICommand GoToAuthorization { get; }
+
 
         public ManagerSuppliesViewModel(NavigationDataServiceMan nbvm)
         {
             GoToProductsCommand = nbvm.GoToProductsPageCommand;
             GoToUsersCommand = nbvm.GoToUsersPageCommand;
+            GoToAuthorization = nbvm.GoToAuthorizationWindowCommand;
+
             Task.Run(() => UpdateSupplyDateAsync());
             LoadSupplies();
             LoadProducts();

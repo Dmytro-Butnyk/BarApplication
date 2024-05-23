@@ -150,3 +150,5 @@ O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-window
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\Resources\AuthorizationPageStyles.baml
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\Resources\ButtonIcons.baml
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\Resources\ButtonStyles.baml
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\Resources\PlaceholderTextBox.baml
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\App.baml
