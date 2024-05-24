@@ -193,6 +193,7 @@
             Content="Add"
             Command="{Binding AddProductButton}"
             Grid.Column="0"
+                FontSize="18"
             Margin="10,15"
             Background="LightGreen"
             Visibility="{Binding IsVisibleAdditionPoles}"/>
@@ -201,6 +202,7 @@
             Command="{Binding DeleteProductButton}"
             Content="Delete"
             Grid.Column="1"
+                FontSize="18"
             Margin="10,15"
             Background="Red"/>
         <!--TABLES-->
@@ -209,6 +211,7 @@
                 Content="Add"
                 Command="{Binding AddTableCommand}"
                 Grid.Column="0"
+                FontSize="18"
                 Margin="10, 15"
                 Background="LightGreen"
                 Visibility="{Binding IsVisibleNewTableFields}"/>
@@ -223,7 +226,7 @@
             
             <Label
                 Style="{StaticResource WhiteText}"
-                Content="Table number:"
+                Content="Table quantity:"
                 VerticalAlignment="Top"
                 HorizontalAlignment="Left"/>
             <TextBox
@@ -319,12 +322,14 @@
                 Style="{StaticResource RoundedCornerButtonStyle}"
                 Background="Moccasin"
                 Margin="10, 3"
+                FontSize="18"
                 Content="SHOW ALL"
                 Command="{Binding ShowProductsButton}"
                 Grid.Row="0"/>
             <Button
                 Style="{StaticResource RoundedCornerButtonStyle}"
                 Background="Moccasin"
+                FontSize="18"
                 Margin="10, 3"
                 Content="SHOW DRINKS"
                 Command="{Binding ShowAlcoholDrinksButton}"
@@ -332,6 +337,7 @@
             <Button
                 Style="{StaticResource RoundedCornerButtonStyle}"
                 Background="Moccasin"
+                FontSize="18"
                 Margin="10, 3"
                 Content="SHOW SNACKS"
                 Command="{Binding ShowSnacksButton}"
@@ -339,6 +345,7 @@
 
             <Button
                 Style="{StaticResource RoundedCornerButtonStyle}"
+                FontSize="18"
                 Margin="10, 3"
                 Content="ADD DRINK"
                 Command="{Binding AddDrinkButton}"
@@ -346,11 +353,13 @@
             <Button
                 Style="{StaticResource RoundedCornerButtonStyle}"
                 Margin="10, 3"
+                FontSize="18"
                 Content="ADD SNACK"
                 Command="{Binding AddSnackButton}"
                 Grid.Row="5"/>
             <Button
                 Style="{StaticResource RoundedCornerButtonStyle}"
+                FontSize="18"
                 Margin="10, 3"
                 Content="ADD TABLE"
                 Command="{Binding ShowTableFields}"

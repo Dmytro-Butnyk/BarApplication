@@ -115,6 +115,7 @@ namespace BarApplication.ViewModels.ManVM
             if (SelectedProduct != null && Quantity != 0)
             {
                 var supply = new Supply(_context.Products.FirstOrDefault(x => x.Id == SelectedProduct.Id), Quantity, SupplyDate);
+                _context.Products.FirstOrDefault(x => x.Id == supply.Product.Id).Quantity += supply.Quantity;
 
                 _context.Supplies.Add(supply);
 

@@ -29,6 +29,27 @@
             <RowDefinition Height="1.5*"/>
         </Grid.RowDefinitions>
 
+        <Grid Grid.ColumnSpan="2">
+            <StackPanel Orientation="Vertical">
+                <Label Content="ORDER DETAILS"
+                   Style="{StaticResource WhiteText}"
+                       FontSize="50"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+                <Label Content="SELLER"
+                   Style="{StaticResource WhiteText}"
+                   Padding="0,0,0,5"
+                       FontSize="26"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"/>
+            </StackPanel>
+
+            <Image Source="../Resources/Images/AB_icon.png"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Height="90"/>
+        </Grid>
+
         <Border
             x:Name="DropDownMenu"
             Grid.RowSpan="3"
@@ -78,7 +99,7 @@
 
                 <Button
                     Command="{Binding GoToAuthorization}"
-                    Content="AUTHORIZATION"
+                    Content="AUTH"
                     Grid.Row="3"
                     Style="{StaticResource MenuInterfaceButtonStyleSeller}"
                     Tag="{StaticResource AuthorizationSellIcon}"/>

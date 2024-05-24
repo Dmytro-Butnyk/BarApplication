@@ -141,9 +141,14 @@ namespace BarApplication.ViewModels.SellVM
                 return;
             }
 
+            decimal totalPrice = (decimal)_context.OrderDetails
+                .Where(x => x.Order.Id == SelectedOrder.Id)
+                .Sum(x => (decimal)x.Quantity * x.Product.Price);
+            MessageBox.Show($"Order for table {SelectedOrder.Table.Number} closed.\n" +
+                $"Total price: {totalPrice.ToString("0.00")}");
+
             SelectedOrder.IsOpened = true;
             await _context.SaveChangesAsync();
-            MessageBox.Show("Order closed!");
             await LoadOrdersAsync(true);
         }
 

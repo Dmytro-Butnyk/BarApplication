@@ -92,7 +92,14 @@ namespace BarApplication.ViewModels.ManVM
             get => _nPassword;
             set
             {
-                _nPassword = value;
+                if(uint.TryParse(value, out var result))
+                {
+                    _nPassword = value;
+                }
+                else
+                {
+                    MessageBox.Show("Password must contain only number");
+                }
                 OnPropertyChanged(nameof(NPassword));
             }
         }

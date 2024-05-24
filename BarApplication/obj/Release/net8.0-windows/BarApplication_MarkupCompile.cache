@@ -1,0 +1,20 @@
+﻿BarApplication
+
+
+winexe
+C#
+.cs
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Release\net8.0-windows\
+BarApplication
+none
+false
+TRACE;RELEASE;NET;NET8_0;NETCOREAPP
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\App.xaml
+11685731128
+
+21316017479
+2392042514633
+MainWindow.xaml;Views\ManV\ManagerSuppliesView.xaml;Views\ManV\ManagerUsersView.xaml;Views\ManV\ManagerView.xaml;Views\Resources\AuthorizationPageStyles.xaml;Views\Resources\ButtonIcons.xaml;Views\Resources\ButtonStyles.xaml;Views\Resources\PlaceholderTextBox.xaml;Views\SellV\SellerOrderDetailsView.xaml;Views\SellV\SellerView.xaml;Views\WorkWindow.xaml;
+
+False
+

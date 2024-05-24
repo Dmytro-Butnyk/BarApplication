@@ -341,18 +341,32 @@ namespace BarApplication.ViewModels.ManVM
 
         private async Task AddNewTable()
         {
-            if (Tables.Any(x => x.Number == NewTableNumber))
+            //if (Tables.Any(x => x.Number == NewTableNumber))
+            //{
+            //    MessageBox.Show("This table number already exists");
+            //    return;
+            //}
+            //if (NewTableNumber == 0)
+            //    return;
+
+            //_context.Tables.Add(new Table { Number = NewTableNumber });
+            //_context.SaveChanges();
+            //MessageBox.Show($"New table number {NewTableNumber} added!");
+            //NewTableNumber = 1;
+            if(NewTableNumber == 0)
             {
-                MessageBox.Show("This table number already exists");
+                MessageBox.Show($"Enter tables quantity!");
                 return;
             }
-            if (NewTableNumber == 0)
-                return;
-
-            _context.Tables.Add(new Table { Number = NewTableNumber });
+            _context.Tables.ToList().ForEach(x => _context.Remove(x));
+            for(int i = 1; i <= NewTableNumber; i++)
+            {
+                _context.Add(new Table { Number = i });
+            }
             _context.SaveChanges();
-            MessageBox.Show($"New table number {NewTableNumber} added!");
+            MessageBox.Show($"Tables count {NewTableNumber} added!");
             NewTableNumber = 1;
+
             await LoadTables();
         }
 

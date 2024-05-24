@@ -17,14 +17,16 @@ namespace DB_Coursework
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer
-                (@"data source=(localdb)\MSSQLLocalDB;initial catalog=Bar_DB;integrated security=True;MultipleActiveResultSets=true");
+                (@"data source=sql.bsite.net\MSSQL2016;initial catalog=sannido_Bar_DB;User ID=sannido_Bar_DB;Password=1234; Trust Server Certificate=True;");
+
+        //LOCAL
+        //@"data source=(localdb)\MSSQLLocalDB;initial catalog=Bar_DB;integrated security=True;MultipleActiveResultSets=true"
+        // CLOUD
+        //@"data source=sql.bsite.net\MSSQL2016;initial catalog=sannido_Bar_DB;User ID=sannido_Bar_DB;Password=1234; Trust Server Certificate=True;"
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Product>().UseTpcMappingStrategy();
-            modelBuilder.Entity<Supply>().ToTable(tb => tb.HasTrigger("UpdateProductQuantityOnSupply"));
-            modelBuilder.Entity<OrderDetail>().ToTable(tb => tb.HasTrigger("tr_UpdateProductQuantity"));
-            modelBuilder.Entity<OrderDetail>().ToTable(tb => tb.HasTrigger("tr_UpdateProductQuantityOnDelete"));
         }
         // Father classes
         public virtual DbSet<Product> Products { get; set; }
