@@ -152,3 +152,9 @@ O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Release\net8.0-wind
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Release\net8.0-windows\BarApplication.pdb
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Release\net8.0-windows\BarApplication.genruntimeconfig.cache
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Release\net8.0-windows\ref\BarApplication.dll
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Release\net8.0-windows\BarApplication_Content.g.cs
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Release\net8.0-windows\BarApplication.dll.manifest
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\bin\Release\net8.0-windows\BarApplication.application
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Release\net8.0-windows\BarApplication.genpublishdeps.cache
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Release\net8.0-windows\BarApplication.dll.manifest
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Release\net8.0-windows\BarApplication.application

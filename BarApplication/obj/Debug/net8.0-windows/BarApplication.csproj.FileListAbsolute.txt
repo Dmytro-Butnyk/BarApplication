@@ -152,3 +152,4 @@ O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-window
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\Resources\ButtonStyles.baml
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\Views\Resources\PlaceholderTextBox.baml
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\App.baml
+O:\ForEdu\repos\krnu\Sem 4\BarApplication\BarApplication\obj\Debug\net8.0-windows\BarApplication_Content.g.cs
