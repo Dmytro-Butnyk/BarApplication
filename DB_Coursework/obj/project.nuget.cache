@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wozPkDdP/kALVjFsdNQjk45vwFHXAYNqmrpe9l6SDnRYxEVQ0/KLzDkGeFQE8H/M4aCf7RNlBs041QbAvPgbMg==",
+  "dgSpecHash": "Q7zpAO8vqT8=",
   "success": true,
-  "projectFilePath": "O:\\ForEdu\\repos\\krnu\\Sem 4\\BarApplication\\DB_Coursework\\DB_Coursework.csproj",
+  "projectFilePath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\BarApplication\\DB_Coursework\\DB_Coursework.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dimab\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\dimab\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

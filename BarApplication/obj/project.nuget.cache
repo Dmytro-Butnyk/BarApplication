@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "09jkwL+p4clqhFRYWLXFG0dyFhrDo0IMVEc1BEcLhFFmapz8XRs5cib/vTKQzj1Kw/7xQcuH6zixAJ9DxXtJng==",
+  "dgSpecHash": "1mmyeR3Qlws=",
   "success": true,
-  "projectFilePath": "O:\\ForEdu\\repos\\krnu\\Sem 4\\BarApplication\\BarApplication\\BarApplication.csproj",
+  "projectFilePath": "D:\\ForProgramming\\Projects\\MyProjects\\CSharp\\BarApplication\\BarApplication\\BarApplication.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dimab\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\dimab\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

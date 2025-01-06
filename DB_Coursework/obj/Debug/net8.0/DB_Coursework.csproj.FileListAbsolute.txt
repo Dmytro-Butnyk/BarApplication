@@ -27,3 +27,18 @@ O:\ForEdu\repos\krnu\Sem 4\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Cour
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.genruntimeconfig.cache
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\DB_Coursework\obj\Debug\net8.0\ref\DB_Coursework.dll
 O:\ForEdu\repos\krnu\Sem 4\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.sourcelink.json
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\bin\Debug\net8.0\DB_Coursework.deps.json
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\bin\Debug\net8.0\DB_Coursework.runtimeconfig.json
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\bin\Debug\net8.0\DB_Coursework.dll
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\bin\Debug\net8.0\DB_Coursework.pdb
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.csproj.AssemblyReference.cache
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.GeneratedMSBuildEditorConfig.editorconfig
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.AssemblyInfoInputs.cache
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.AssemblyInfo.cs
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.csproj.CoreCompileInputs.cache
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.sourcelink.json
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.dll
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\refint\DB_Coursework.dll
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.pdb
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\DB_Coursework.genruntimeconfig.cache
+D:\ForProgramming\Projects\MyProjects\CSharp\BarApplication\DB_Coursework\obj\Debug\net8.0\ref\DB_Coursework.dll

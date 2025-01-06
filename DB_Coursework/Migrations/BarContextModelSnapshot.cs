@@ -97,14 +97,7 @@ namespace DB_Coursework.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("OrderDetails", t =>
-                        {
-                            t.HasTrigger("tr_UpdateProductQuantity");
-
-                            t.HasTrigger("tr_UpdateProductQuantityOnDelete");
-                        });
-
-                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                    b.ToTable("OrderDetails");
                 });
 
             modelBuilder.Entity("DB_Coursework.Models.Orders.Table", b =>
@@ -144,12 +137,7 @@ namespace DB_Coursework.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Supplies", t =>
-                        {
-                            t.HasTrigger("UpdateProductQuantityOnSupply");
-                        });
-
-                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                    b.ToTable("Supplies");
                 });
 
             modelBuilder.Entity("DB_Coursework.Models.Users.User", b =>

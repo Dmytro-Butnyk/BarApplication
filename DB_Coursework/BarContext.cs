@@ -17,7 +17,7 @@ namespace DB_Coursework
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseSqlServer
-                (@"data source=sql.bsite.net\MSSQL2016;initial catalog=sannido_Bar_DB;User ID=sannido_Bar_DB;Password=1234; Trust Server Certificate=True;");
+                (@"data source=(localdb)\MSSQLLocalDB;initial catalog=Bar_DB;integrated security=True;MultipleActiveResultSets=true");
 
         //LOCAL
         //@"data source=(localdb)\MSSQLLocalDB;initial catalog=Bar_DB;integrated security=True;MultipleActiveResultSets=true"
